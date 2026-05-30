@@ -17,9 +17,7 @@ $app = Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->report(function (\Throwable $e) {
-            file_put_contents('/tmp/laravel-error.txt', $e->getMessage() . "\n" . $e->getTraceAsString());
-        });
+        //
     })
     ->create();
 
