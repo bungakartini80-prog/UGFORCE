@@ -256,9 +256,10 @@ def health():
     return jsonify({"status": "ok", "engine": "DeepFace+RetinaFace+ArcFace+Facenet", "time": time.time()})
 
 if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5001))
     print("=" * 60)
     print("  UGFORCE Face Detection Server")
-    print("  Engine : OpenCV Detect (Port 5001) + Facenet")
-    print("  Port   : 5001")
+    print(f"  Engine : OpenCV Detect + Facenet")
+    print(f"  Port   : {port}")
     print("=" * 60)
-    app.run(host="0.0.0.0", port=5001, debug=False, threaded=True)
+    app.run(host="0.0.0.0", port=port, debug=False, threaded=True)

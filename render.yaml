@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: ugforce-face
+    runtime: python
+    buildCommand: pip install -r python/requirements.txt
+    startCommand: cd python && gunicorn face_detect:app --bind 0.0.0.0:$PORT --timeout 120 --workers 1 --threads 2
+    envVars:
+      - key: TF_CPP_MIN_LOG_LEVEL
+        value: "3"
+      - key: TF_ENABLE_ONEDNN_OPTS
+        value: "0"
+      - key: PYTHON_VERSION
+        value: "3.11.6"
+    plan: free
+    autoDeploy: true
