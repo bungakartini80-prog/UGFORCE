@@ -20,6 +20,10 @@
       "dest": "/public/$1/$2"
     },
     {
+      "src": "/(favicon.ico|robots.txt|logo.png|classroom.png)",
+      "dest": "/public/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "/api/index.php"
     }
