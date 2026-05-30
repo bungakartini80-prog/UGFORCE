@@ -487,14 +487,14 @@
                             </div>
                         </div>
 
-                        <!-- ── INTERACTIVE BIOMETRIC SCANNER (REQUIRED FOR ALL ROLES) ── -->
+                        <!-- ── INTERACTIVE BIOMETRIC SCANNER (OPTIONAL) ── -->
                         <div id="face-scanner-section" class="col-md-12 mt-3">
                             <div class="opencv-register-panel p-4 rounded-3xl border border-blue-500/20 bg-blue-500/5 text-center shadow-inner relative">
                                 <span class="badge bg-blue-500/20 border border-blue-500/30 text-blue-500 dark:text-blue-400 text-[10px] font-black uppercase tracking-wider mb-3 inline-block">
-                                    <i class="bi bi-camera-fill me-1"></i> Daftar Wajah
+                                    <i class="bi bi-camera-fill me-1"></i> Daftar Wajah (Opsional)
                                 </span>
-                                <h4 class="font-extrabold text-sm mb-3">Daftarkan Wajah</h4>
-                                <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Arahkan wajah ke kamera sampai proses selesai. Data ini dipakai untuk verifikasi saat login.</p>
+                                <h4 class="font-extrabold text-sm mb-3">Daftarkan Wajah <span class="text-slate-400 font-normal text-xs">(Tidak Wajib)</span></h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Arahkan wajah ke kamera jika ingin mengaktifkan fitur verifikasi wajah. <strong>Anda tetap bisa daftar tanpa langkah ini.</strong></p>
                                 
                                 <div class="d-flex justify-content-center mb-4 mt-4">
                                     <!-- Circular preview overlay with HUD -->
@@ -512,13 +512,13 @@
                                     </div>
                                 </div>
 
-                                <div class="mb-4 flex justify-center">
+                                <div class="mb-4 flex justify-center gap-2 flex-wrap">
                                     <button type="button" id="btn-start-scan" class="px-4 py-2.5 rounded-xl border border-blue-500/30 text-blue-600 dark:text-sky-400 bg-blue-500/5 hover:bg-blue-500/10 dark:bg-sky-400/5 dark:hover:bg-sky-400/10 transition-all duration-300 font-bold flex items-center justify-center gap-2 text-xs">
                                         <i class="bi bi-camera-fill text-sm"></i> Aktifkan & Mulai Scan Wajah
                                     </button>
                                 </div>
                                 
-                                <div id="scan-status" class="font-mono text-xs text-slate-600 dark:text-slate-400 mb-2 bg-slate-100 dark:bg-black/35 rounded-lg py-2 px-3 border border-slate-200/50 dark:border-slate-800">[MENUNGGU PENGISIAN DATA DIRI]</div>
+                                <div id="scan-status" class="font-mono text-xs text-slate-600 dark:text-slate-400 mb-2 bg-slate-100 dark:bg-black/35 rounded-lg py-2 px-3 border border-slate-200/50 dark:border-slate-800">[OPSIONAL — BISA DILEWATI]</div>
                                 
                                 <!-- Scan Progress Bar & Percent -->
                                 <div class="w-48 mx-auto mb-3" id="register-progress-container" style="display: none;">
@@ -680,11 +680,8 @@
         const canvas = document.getElementById('register-canvas');
         const placeholder = document.getElementById('register-placeholder');
 
-        // Force biometrics required initially
-        if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.classList.add('opacity-50');
-        }
+        // Biometrics are OPTIONAL — submit is always enabled
+        // Face scan is a bonus feature, not required for registration
 
         let stream = null;
         let isDrawing = true;
@@ -951,8 +948,7 @@
                                 avatarContainer.classList.remove('shake-head');
                                 avatarContainer.classList.add('waving');
                             }
-                            submitBtn.disabled = false;
-                            submitBtn.classList.remove('opacity-50');
+                            // Submit was already enabled (face scan is optional)
                         }
                     } else {
                         faceDetected = false;
