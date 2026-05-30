@@ -284,7 +284,7 @@
                 <span class="text-xs font-bold tracking-widest text-slate-800 dark:text-white uppercase drop-shadow-md">Server FIKTI • Aktif & Terhubung</span>
             </div>
             
-            <h2 class="text-5xl lg:text-7xl font-extrabold tracking-tight text-white drop-shadow-lg leading-[1.15] transition-colors duration-500">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight text-white drop-shadow-lg leading-[1.15] transition-colors duration-500">
                 Sistem Manajemen <br>
                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-500 drop-shadow-xl">
                     Fasilitas Kampus
