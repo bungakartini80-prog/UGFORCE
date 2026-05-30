@@ -17,21 +17,7 @@ $app = Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->report(function (\Throwable $e) {
-            header('Content-Type: text/plain', true, 500);
-            echo "ACTUAL ORIGINAL EXCEPTION:\n";
-            echo get_class($e) . " - " . $e->getMessage() . "\n";
-            echo "File: " . $e->getFile() . ":" . $e->getLine() . "\n";
-            echo $e->getTraceAsString() . "\n";
-            if ($prev = $e->getPrevious()) {
-                echo "Previous Original Exception:\n";
-                echo "  Class: " . get_class($prev) . "\n";
-                echo "  Message: " . $prev->getMessage() . "\n";
-                echo "  File: " . $prev->getFile() . ":" . $prev->getLine() . "\n";
-                echo "  Trace:\n" . $prev->getTraceAsString() . "\n";
-            }
-            exit(1);
-        });
+        //
     })
     ->create();
 
