@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'face' => [
+        'api_url' => env('FACE_API_URL', 'http://127.0.0.1:5001'),
+    ],
+
 ];
+
