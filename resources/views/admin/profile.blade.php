@@ -279,7 +279,7 @@
 /* ================================================================
    UGFORCE Profile Camera — DeepFace Python API, NO mirror, 60fps
    ================================================================ */
-const FACE_API     = 'http://127.0.0.1:5001';
+const FACE_API     = '{{ env("FACE_API_URL", "http://127.0.0.1:5001") }}';
 const FRAME_MS     = 1000 / 60;
 const API_INTERVAL = 120;   // ms between API calls (~8/sec)
 const DET_W = 320, DET_H = 240;
