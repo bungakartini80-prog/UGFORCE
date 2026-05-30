@@ -8,6 +8,10 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 // --- RUTE HALAMAN UTAMA (WELCOME SCREEN) ---
+Route::get('/debug', function () {
+    return "Debug OK";
+});
+
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
