@@ -1,0 +1,12 @@
+- [x] Jadikan tampilan web adaptif (Hybrid Responsive Layout): jika dibuka dari desktop maka tampil layout desktop (lebar penuh, navbar atas, footer penuh), dan jika dibuka dari mobile/HP maka tampil layout aplikasi mobile (top app bar, bottom tab navigation).
+- [x] Hapus semua efek latar belakang dekoratif (glowing orbs, stars, particle canvases, cyber grid overlay) secara global di mode terang (light mode) maupun gelap (dark mode).
+- [x] Pastikan warna latar belakang murni solid: `#f8fafc` saat Mode Terang dan `#020617` saat Mode Gelap.
+- [x] Hapus transisi efek paralaks 3D pada foto background di halaman welcome.
+- [x] Perbaiki bug registrasi event listener tombol dark/light mode toggle agar dapat dipicu pada saat halaman dimuat ulang dari cache (sesi tersimpan).
+- [x] Jalankan pembersihan view cache Laravel (`php artisan view:clear`) agar perubahan langsung diterapkan secara konsisten.
+- [x] Perbaiki visualisasi sidebar admin pada tampilan mobile: buat brand (logo) dan profile tetap berada di atas (fixed) dan tombol keluar (logout) tetap di bawah (fixed), sedangkan daftar menu di bagian tengah dapat di-scroll (scrollable) secara independen.
+- [x] Desain ulang navigasi tab bar bawah mobile (bottom tab bar) dengan tampilan modern minimalis berbentuk floating dock, lengkap dengan efek glassmorphism dan background kapsul/pill aktif untuk item navigasi yang terpilih.
+- [x] Rapikan navigasi bawah (bottom tab bar) untuk peran mahasiswa, dosen, dan tamu (3-4 item) secara responsif agar membagi ruang secara rata (space-around) tanpa scroll bar kosong, dan biarkan hanya admin (8 item) yang memiliki scroll horizontal.
+- [x] Sembunyikan footer desktop raksasa secara penuh pada perangkat mobile untuk tampilan aplikasi mobile yang bersih dan rapi.
+- [x] Desain ulang halaman gerbang pemindaian wajah (Biometric OpenCV Face Gate) untuk perangkat mobile agar lebih ringkas dan modern: menyembunyikan terminal logs dan avatar 3D yang memakan tempat, menata ulang telemetry ke dalam baris badge horizontal yang kompak, memperkecil bingkai kamera menjadi maks 240px, serta menyesuaikan ukuran teks agar seluruh elemen pas di dalam satu layar tanpa scroll.
+- [x] Ubah warna teks tombol 'Kembali ke Dashboard' di halaman riwayat peminjaman (`bookings/index.blade.php`) menjadi warna putih bersih (`#ffffff !important`) dan berikan efek text shadow tipis agar terbaca dengan sangat jelas di atas latar belakang gambar Kampus E.
