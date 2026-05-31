@@ -984,7 +984,7 @@
 
                     try {
                         // 1. Check face detection & coordinates
-                        const detectRes = await fetch('{{ env("FACE_API_URL", "http://127.0.0.1:5001") }}/detect', {
+                        const detectRes = await fetch('{{ config("services.face.api_url", "http://127.0.0.1:5001") }}/detect', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ image: currentFrameB64 })
@@ -1035,7 +1035,7 @@
                                 progressBar.style.width = '50%';
                                 progressText.innerText = 'MEMPROSES VERIFIKASI: 50%';
 
-                                fetch('{{ env("FACE_API_URL", "http://127.0.0.1:5001") }}/verify', {
+                                fetch('{{ config("services.face.api_url", "http://127.0.0.1:5001") }}/verify', {
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify({

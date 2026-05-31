@@ -897,7 +897,7 @@
                 const currentFrameB64 = captureCanvas.toDataURL('image/jpeg', 0.85);
 
                 try {
-                    const detectRes = await fetch('{{ env("FACE_API_URL", "http://127.0.0.1:5001") }}/detect', {
+                    const detectRes = await fetch('{{ config("services.face.api_url", "http://127.0.0.1:5001") }}/detect', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ image: currentFrameB64 })

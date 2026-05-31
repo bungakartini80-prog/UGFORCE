@@ -20,8 +20,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Force HTTPS on Vercel (production) to prevent "not secure" form warnings
-        if ($this->app->environment('production') || isset($_SERVER['VERCEL']) || isset($_ENV['VERCEL'])) {
+        // Force HTTPS on Vercel or any secure proxy to prevent "not secure" form warnings
+        if ($this->app->environment('production') || 
+            isset($_SERVER['VERCEL']) || 
+            isset($_ENV['VERCEL']) || 
+            isset($_SERVER['VERCEL_REGION']) || 
+            (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')) {
             URL::forceScheme('https');
         }
     }
