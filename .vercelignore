@@ -1,0 +1,12 @@
+bootstrap/cache/packages.php
+bootstrap/cache/services.php
+bootstrap/cache/config.php
+bootstrap/cache/routes.php
+.env
+.env.*
+.git
+.github
+node_modules
+vendor
+python
+*.log
