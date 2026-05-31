@@ -19,13 +19,16 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY . .
 
+# Pre-download DeepFace model weights during build to optimize RAM and speed at runtime
+RUN python download_models.py
+
 # Expose port
 EXPOSE 8080
 
 # Set environment variables
 ENV TF_CPP_MIN_LOG_LEVEL=3
 ENV TF_ENABLE_ONEDNN_OPTS=0
-ENV PORT=8080
 
-# Start with gunicorn
-CMD ["gunicorn", "face_detect:app", "--bind", "0.0.0.0:8080", "--timeout", "120", "--workers", "1", "--threads", "2"]
+# Start with gunicorn, binding dynamically to the environment PORT
+CMD gunicorn face_detect:app --bind 0.0.0.0:$PORT --timeout 120 --workers 1 --threads 2
+
