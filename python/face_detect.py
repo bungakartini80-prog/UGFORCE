@@ -44,7 +44,7 @@ def get_deepface():
 
 STRICT_FACE_CONFIDENCE = 0.40
 STRICT_VERIFIERS = [
-    {"model_name": "ArcFace", "distance_metric": "cosine", "threshold": 0.60},
+    {"model_name": "ArcFace", "distance_metric": "cosine", "threshold": 0.65},
     {"model_name": "Facenet", "distance_metric": "cosine", "threshold": 0.40},
 ]
 
@@ -202,16 +202,21 @@ def verify():
                     "error": str(e),
                 })
 
-        verified = all(check["passed"] for check in checks)
-        weakest_score = min(
-            max(0.0, 1.0 - (check["distance"] / check["threshold"]))
-            for check in checks
-        )
+        verified = any(check["passed"] for check in checks)
         if verified:
-            similarity = round(85.0 + (weakest_score * 15.0), 1)
+            passed_scores = [
+                max(0.0, 1.0 - (check["distance"] / check["threshold"]))
+                for check in checks if check["passed"]
+            ]
+            best_passed_score = max(passed_scores) if passed_scores else 0.0
+            similarity = round(85.0 + (best_passed_score * 15.0), 1)
         else:
-            similarity = round(max(0.0, min(80.0, 80.0 * weakest_score)), 1)
-        distance = max(check["distance"] for check in checks)
+            best_score = max(
+                max(0.0, 1.0 - (check["distance"] / check["threshold"]))
+                for check in checks
+            )
+            similarity = round(max(0.0, min(80.0, 80.0 * best_score)), 1)
+        distance = min(check["distance"] for check in checks)
 
         return jsonify({
             "verified": verified,

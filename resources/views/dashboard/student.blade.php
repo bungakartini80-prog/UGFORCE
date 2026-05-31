@@ -522,6 +522,69 @@
         transform: rotate(-12deg) translate(2px, 1px);
         transform-origin: 91px 61px;
     }
+
+    /* ── FLOATING WHATSAPP BUTTON ── */
+    .wa-floating-btn {
+        position: fixed;
+        bottom: 90px;
+        right: 24px;
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+        color: #ffffff !important;
+        padding: 12px 20px;
+        border-radius: 50px;
+        box-shadow: 0 8px 30px rgba(37, 211, 102, 0.35);
+        font-family: var(--font-sans);
+        font-weight: 700;
+        font-size: 14px;
+        text-decoration: none !important;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        cursor: pointer;
+    }
+    
+    .wa-floating-btn i {
+        font-size: 20px;
+        animation: waPulse 2s infinite;
+    }
+    
+    .wa-floating-btn .wa-text {
+        max-width: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        transition: max-width 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        opacity: 0;
+    }
+    
+    .wa-floating-btn:hover {
+        transform: translateY(-5px) scale(1.03);
+        box-shadow: 0 12px 35px rgba(37, 211, 102, 0.5);
+    }
+    
+    .wa-floating-btn:hover .wa-text {
+        max-width: 200px;
+        opacity: 1;
+    }
+    
+    @keyframes waPulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.15); }
+    }
+    
+    @media (max-width: 768px) {
+        .wa-floating-btn {
+            bottom: 100px;
+            right: 16px;
+            padding: 10px 14px;
+            font-size: 12px;
+        }
+        .wa-floating-btn .wa-text {
+            max-width: 150px;
+            opacity: 1;
+        }
+    }
 </style>
 @include('partials.biometric-gate')
 
@@ -671,6 +734,16 @@
 
     </div>
 </div>
+
+<!-- FLOATING WHATSAPP CONSULTATION BUTTON -->
+<a href="https://wa.me/6281234567890?text=Halo%20Admin%20UGFORCE,%20saya%20mahasiswa%20ingin%20berkonsultasi%20mengenai%20layanan%20peminjaman%20ruangan." 
+   target="_blank" 
+   class="wa-floating-btn"
+   title="Konsultasi Layanan via WhatsApp"
+   id="waConsultationBtn">
+    <i class="bi bi-whatsapp"></i>
+    <span class="wa-text">Konsultasi Layanan</span>
+</a>
 
 <script>
     // Filtering rooms by floor tab

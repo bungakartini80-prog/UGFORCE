@@ -409,8 +409,21 @@ function sendFrameToApi(video) {
     lastApiCall = now;
     apiPending  = true;
 
-    /* Draw frame — NO mirror, natural direction */
-    detCtx.drawImage(video, 0, 0, DET_W, DET_H);
+    /* Draw frame — NO mirror, natural direction (maintaining aspect ratio / cover crop to prevent squishing on mobile) */
+    var vWidth = video.videoWidth || video.width || DET_W;
+    var vHeight = video.videoHeight || video.height || DET_H;
+    var targetAspect = DET_W / DET_H;
+    var videoAspect = vWidth / vHeight;
+    
+    var sx = 0, sy = 0, sWidth = vWidth, sHeight = vHeight;
+    if (videoAspect > targetAspect) {
+        sWidth = vHeight * targetAspect;
+        sx = (vWidth - sWidth) / 2;
+    } else {
+        sHeight = vWidth / targetAspect;
+        sy = (vHeight - sHeight) / 2;
+    }
+    detCtx.drawImage(video, sx, sy, sWidth, sHeight, 0, 0, DET_W, DET_H);
     var b64 = detCanvas.toDataURL('image/jpeg', 0.7);
 
     fetch(FACE_API + '/detect', {

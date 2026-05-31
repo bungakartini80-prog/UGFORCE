@@ -974,12 +974,27 @@
                     if (isProcessing) return;
                     isProcessing = true;
 
-                    // Capture current video frame to base64
+                    // Capture current video frame to base64 (maintaining aspect ratio / cover crop to prevent squishing on mobile)
                     const captureCanvas = document.createElement('canvas');
                     captureCanvas.width = 320;
                     captureCanvas.height = 240;
                     const captureCtx = captureCanvas.getContext('2d');
-                    captureCtx.drawImage(video, 0, 0, 320, 240);
+                    
+                    const vWidth = video.videoWidth || video.width || 320;
+                    const vHeight = video.videoHeight || video.height || 240;
+                    const targetAspect = 320 / 240;
+                    const videoAspect = vWidth / vHeight;
+                    
+                    let sx = 0, sy = 0, sWidth = vWidth, sHeight = vHeight;
+                    if (videoAspect > targetAspect) {
+                        sWidth = vHeight * targetAspect;
+                        sx = (vWidth - sWidth) / 2;
+                    } else {
+                        sHeight = vWidth / targetAspect;
+                        sy = (vHeight - sHeight) / 2;
+                    }
+                    captureCtx.drawImage(video, sx, sy, sWidth, sHeight, 0, 0, 320, 240);
+                    
                     const currentFrameB64 = captureCanvas.toDataURL('image/jpeg', 0.85);
 
                     try {
