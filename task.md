@@ -1,4 +1,5 @@
-- [x] Perbaikan pemindaian wajah OpenCV di perangkat mobile (HP): Menerapkan pemangkasan tengah (cover crop/aspect ratio preservation) pada pengambilan gambar kamera untuk mencegah distorsi wajah (squished face).
-- [x] Optimasi sensitivitas verifikasi wajah: Mengubah logika verifikasi di server Python agar berhasil jika salah satu model (ArcFace/Facenet) lolos kecocokan, serta melonggarkan threshold toleransi ArcFace menjadi 0.65.
-- [x] Tambahkan tombol melayang konsultasi WhatsApp pada halaman dashboard mahasiswa (floating WhatsApp consultation button).
-- [x] Push semua perubahan kode ke repositori GitHub (`bunga` dan `origin`) dan deploy ulang ke server hosting Vercel.
+- [x] Perbaiki tampilan dashboard mahasiswa agar tidak terpotong (responsive cover-crop margins & paddings) dan ubah kolom grid ruangan menjadi 1 kolom yang sangat rapi di mobile.
+- [x] Rapikan dan optimalkan tata letak greeting banner & background photo (portal-hero) di halaman mahasiswa agar modern dan terukur dengan indah di HP.
+- [x] Desain ulang dan rapikan halaman riwayat pesanan (bookings/index.blade.php) pada perangkat HP dengan mentransformasikan tabel HTML biasa menjadi kartu daftar pesanan bertumpuk yang sangat dinamis, mewah, dan modern (tidak meluap ke samping).
+- [x] Rapikan dan optimalkan halaman pembuatan pesanan peminjaman (bookings/create.blade.php) pada perangkat HP dengan menyesuaikan paddings banner hero, main grid, dan selection cards agar menyatu secara estetis.
+- [x] Jalankan push ke kedua remote repository (bunga dan origin) serta lakukan deploy ulang ke Vercel production.

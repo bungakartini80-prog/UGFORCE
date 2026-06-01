@@ -198,6 +198,117 @@
     html:not(.dark) .page-btn { background: #ffffff; border-color: rgba(14, 165, 233, 0.2); }
     .page-btn:hover:not(:disabled) { border-color: #0ea5e9; color: #0ea5e9; background: rgba(59, 130, 246, 0.1); }
     .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    /* ── MOBILE RESPONSIVE STYLES ── */
+    @media (max-width: 768px) {
+        .page-container {
+            padding: 16px;
+        }
+        .page-header {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .btn-back {
+            justify-content: center;
+        }
+        .btn-glow-cyan {
+            justify-content: center;
+            width: 100%;
+        }
+        .table-toolbar {
+            padding: 16px 20px;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 12px;
+        }
+        .search-box {
+            max-width: 100%;
+        }
+        .table-wrapper {
+            padding: 10px 12px;
+        }
+        
+        /* Transform Table into beautiful individual cards */
+        .data-table, .data-table thead, .data-table tbody, .data-table th, .data-table td, .data-table tr {
+            display: block;
+            width: 100%;
+        }
+        .data-table thead {
+            display: none;
+        }
+        .data-table tr {
+            margin-bottom: 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-soft);
+            background: rgba(255, 255, 255, 0.02);
+            padding: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        html:not(.dark) .data-table tr {
+            background: #ffffff;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.04);
+        }
+        .data-table tr:hover {
+            border-color: var(--border-strong);
+            transform: translateY(-2px);
+        }
+        .data-table td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0 !important;
+            background: transparent !important;
+            border: none !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            font-size: 13px;
+        }
+        .data-table td::before {
+            content: attr(data-label);
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+        }
+        .data-table td:first-child {
+            flex-direction: column;
+            align-items: flex-start;
+            border-bottom: 1px dashed var(--border-soft) !important;
+            padding-bottom: 12px !important;
+            margin-bottom: 8px;
+        }
+        .data-table td:first-child::before {
+            display: none;
+        }
+        .td-facility {
+            font-size: 16px;
+            margin-bottom: 6px;
+            padding-left: 0 !important;
+        }
+        .td-purpose {
+            max-width: 100%;
+            white-space: normal;
+        }
+        .data-table td:last-child {
+            border-top: 1px dashed var(--border-soft) !important;
+            padding-top: 12px !important;
+            margin-top: 8px;
+            justify-content: flex-end;
+        }
+        .data-table td:last-child::before {
+            display: none;
+        }
+        .pagination-bar {
+            padding: 16px 20px;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+        }
+    }
 </style>
 
 <!-- BACKGROUND LAYER -->
@@ -237,18 +348,18 @@
                 <tbody id="ug-tbody">
                     @forelse($bookings as $booking)
                     <tr data-search="{{ strtolower($booking->room->name . ' ' . $booking->purpose) }}">
-                        <td>
+                        <td data-label="Fasilitas">
                             <div class="td-facility"><i class="bi bi-grid-1x2-fill me-2 opacity-50"></i> {{ $booking->room->name }}</div>
                             <div class="td-purpose" title="{{ $booking->purpose }}">{{ $booking->purpose }}</div>
                         </td>
-                        <td>
+                        <td data-label="Waktu">
                             <div class="td-date">{{ \Carbon\Carbon::parse($booking->booking_date)->translatedFormat('d M Y') }}</div>
                             <div class="td-time">
                                 <i class="bi bi-clock me-1"></i> 
                                 {{ \Carbon\Carbon::parse($booking->start_time)->format('H:i') }} — {{ \Carbon\Carbon::parse($booking->end_time)->format('H:i') }} WIB
                             </div>
                         </td>
-                        <td>
+                        <td data-label="Status">
                             @if($booking->status === 'pending')
                                 <span class="pill pill-pending"><i class="bi bi-arrow-repeat spin-slow"></i> Menunggu Verifikasi</span>
                             @elseif($booking->status === 'approved')
@@ -257,7 +368,7 @@
                                 <span class="pill pill-rejected"><i class="bi bi-x-circle-fill"></i> Ditolak</span>
                             @endif
                         </td>
-                        <td style="text-align:right">
+                        <td data-label="Opsi" style="text-align:right">
                             @if($booking->status === 'pending')
                                 <form action="{{ route('bookings.cancel', $booking) }}" method="POST" style="display:inline" onsubmit="return confirm('Yakin ingin membatalkan pengajuan peminjaman ini?')">
                                     @csrf @method('DELETE')

@@ -585,6 +585,103 @@
             opacity: 1;
         }
     }
+
+    /* ── MOBILE RESPONSIVE MEDIA QUERIES ── */
+    @media (max-width: 768px) {
+        .container {
+            padding-left: 12px !important;
+            padding-right: 12px !important;
+        }
+        .portal-hero {
+            padding: 24px 20px !important;
+            border-radius: var(--radius-md) !important;
+            margin-bottom: 24px !important;
+        }
+        .hero-greeting {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 12px !important;
+        }
+        .hero-avatar {
+            width: 48px !important;
+            height: 48px !important;
+            font-size: 18px !important;
+            border-radius: 12px !important;
+        }
+        .hero-text h2 {
+            font-size: 20px !important;
+        }
+        .hero-text p {
+            font-size: 11px !important;
+        }
+        .clock-display {
+            font-size: 12px !important;
+        }
+        .metrics-grid {
+            grid-template-columns: 1fr !important;
+            gap: 16px !important;
+            margin-bottom: 24px !important;
+        }
+        .metric-card {
+            padding: 16px !important;
+            border-radius: var(--radius-md) !important;
+        }
+        .portal-card {
+            padding: 20px 16px !important;
+            border-radius: var(--radius-md) !important;
+        }
+        .panel-header {
+            font-size: 16px !important;
+            margin-bottom: 16px !important;
+            padding-bottom: 12px !important;
+        }
+        .floor-tabs {
+            margin-bottom: 16px !important;
+        }
+        .floor-tab-btn {
+            padding: 8px 14px !important;
+            font-size: 12px !important;
+            border-radius: 8px !important;
+        }
+        .rooms-display-grid {
+            grid-template-columns: 1fr !important;
+            gap: 16px !important;
+            max-height: none !important;
+            padding: 0 !important;
+        }
+        .room-display-card {
+            border-radius: var(--radius-md) !important;
+        }
+        .room-card-image {
+            height: 160px !important;
+        }
+        .activity-feed {
+            gap: 12px !important;
+        }
+        .feed-item {
+            padding: 14px 16px !important;
+            border-radius: var(--radius-md) !important;
+        }
+        .feed-left h4 {
+            font-size: 14px !important;
+        }
+        .feed-left p {
+            font-size: 11px !important;
+        }
+        .feed-right {
+            align-items: flex-end !important;
+        }
+        .feed-date {
+            font-size: 11px !important;
+        }
+        .feed-time {
+            font-size: 10px !important;
+        }
+        .instructions-card {
+            margin-top: 16px !important;
+            padding: 20px 16px !important;
+        }
+    }
 </style>
 @include('partials.biometric-gate')
 

@@ -374,6 +374,58 @@
         font-weight: 700;
         color: #10b981;
     }
+
+    /* ── MOBILE RESPONSIVE MEDIA QUERIES ── */
+    @media (max-width: 768px) {
+        .container {
+            padding-left: 12px !important;
+            padding-right: 12px !important;
+            padding-top: 16px !important;
+        }
+        .btn-back {
+            margin-bottom: 16px !important;
+        }
+        .portal-hero {
+            padding: 24px 20px !important;
+            border-radius: var(--radius-md) !important;
+            margin-bottom: 20px !important;
+            text-align: center !important;
+            justify-content: center !important;
+        }
+        .portal-hero-title h2 {
+            font-size: 22px !important;
+        }
+        .portal-hero-title p {
+            font-size: 13px !important;
+        }
+        .main-grid {
+            margin-top: 0 !important;
+            gap: 20px !important;
+        }
+        .portal-card {
+            padding: 20px 16px !important;
+            border-radius: var(--radius-md) !important;
+        }
+        .card-title {
+            font-size: 17px !important;
+            margin-bottom: 16px !important;
+            padding-bottom: 12px !important;
+        }
+        .rooms-grid {
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)) !important;
+            gap: 12px !important;
+            max-height: 320px !important;
+        }
+        .room-select-image {
+            height: 70px !important;
+        }
+        .room-card-info {
+            padding: 8px !important;
+        }
+        .room-card-name {
+            font-size: 13px !important;
+        }
+    }
 </style>
 
 <div class="container py-5" style="max-width: 1100px;">
