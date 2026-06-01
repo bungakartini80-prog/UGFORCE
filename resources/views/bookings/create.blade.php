@@ -130,11 +130,25 @@
         gap: 8px;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
-        padding-bottom: 12px;
+        padding-bottom: 8px;
         margin-bottom: 24px;
-        scrollbar-width: none;
+        width: 100%;
+        max-width: 100%;
     }
-    .floor-selector::-webkit-scrollbar { display: none; }
+    .floor-selector::-webkit-scrollbar {
+        height: 4px;
+    }
+    .floor-selector::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 10px;
+    }
+    .dark .floor-selector::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+    }
+    .floor-selector::-webkit-scrollbar-thumb {
+        background: var(--accent-blue);
+        border-radius: 10px;
+    }
     
     .floor-btn {
         padding: 10px 18px;
@@ -407,6 +421,7 @@
         .portal-card {
             padding: 20px 16px !important;
             border-radius: var(--radius-md) !important;
+            min-width: 0 !important;
         }
         .card-title {
             font-size: 17px !important;

@@ -1,2 +1,3 @@
-- [x] Perbaiki kegagalan horizontal scrolling pada tab pemilihan lantai (Lantai 4-6) di halaman dashboard mahasiswa & halaman pembuatan pesanan peminjaman (bookings/create.blade.php) dengan menerapkan flex-shrink: 0 pada tombol tab dan -webkit-overflow-scrolling: touch pada penampungnya.
+- [x] Perbaiki kegagalan horizontal scrolling pada tab pemilihan lantai di mobile dengan menerapkan width: 100%, max-width: 100%, dan min-width: 0 !important pada portal-card.
+- [x] Tambahkan visual indicator (scrollbar horizontal tipis, pill-shaped, premium) pada tab pemilihan lantai agar pengguna mengetahui bahwa halaman bisa digeser ke kanan/kiri di perangkat HP.
 - [x] Push perubahan ke repositori git (bunga & origin) dan deploy ulang ke Vercel production.
