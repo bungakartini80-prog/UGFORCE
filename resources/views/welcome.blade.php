@@ -268,7 +268,7 @@
         /* Enlarge welcome hero section */
         .welcome-hero {
             padding-top: 110px !important;
-            padding-bottom: 70px !important;
+            padding-bottom: 120px !important; /* Spacing between buttons and bouncing bottom chevron */
             min-height: 100vh !important;
             display: flex;
             align-items: center;
@@ -387,6 +387,9 @@
             font-size: 14px !important;
             margin-bottom: 24px !important;
         }
+        .custom-scroll-bounce {
+            bottom: 16px !important;
+        }
     }
 
     /* ── CUSTOM MICRO-ANIMATIONS & STYLES FOR OVERHAUL ── */
@@ -433,8 +436,8 @@
                 <span class="text-xs font-bold tracking-widest text-slate-100 dark:text-white uppercase drop-shadow-md">Server FIKTI • Aktif & Terhubung</span>
             </div>
             
-            <div class="flex items-center gap-2 text-xs font-bold tracking-[0.3em] text-[#3b82f6] uppercase mb-1">
-                <span class="w-6 h-[1.5px] bg-[#3b82f6]"></span>
+            <div class="flex items-center gap-2 text-xs font-bold tracking-[0.3em] text-amber-400 dark:text-sky-400 uppercase mb-1">
+                <span class="w-6 h-[1.5px] bg-amber-400 dark:bg-sky-400"></span>
                 Kampus J1 FIKTI
             </div>
             
