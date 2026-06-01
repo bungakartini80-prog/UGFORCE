@@ -262,6 +262,130 @@
         box-shadow: 0 15px 35px rgba(59, 130, 246, 0.6) !important;
         color: #ffffff !important;
     }
+
+    /* ── MOBILE RESPONSIVE LUXURY STYLES ── */
+    @media (max-width: 768px) {
+        /* Enlarge welcome hero section */
+        .welcome-hero {
+            padding-top: 100px !important;
+            padding-bottom: 60px !important;
+            min-height: 100vh !important;
+            display: flex;
+            align-items: center;
+        }
+        
+        .lg\:col-span-7 {
+            text-align: left;
+            padding: 0 4px;
+        }
+        
+        /* Modernized glowing badge */
+        .inline-flex.items-center.gap-3 {
+            padding: 8px 16px !important;
+            border-radius: 9999px !important;
+            font-size: 10px !important;
+            background: rgba(255, 255, 255, 0.08) !important;
+            border: 1px solid rgba(59, 130, 246, 0.25) !important;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.15) !important;
+            backdrop-filter: blur(12px) !important;
+        }
+        
+        /* Large, elegant, premium typography */
+        h2.welcome-title {
+            font-size: 2.5rem !important;
+            line-height: 1.15 !important;
+            letter-spacing: -0.02em !important;
+            font-weight: 800 !important;
+            margin-bottom: 20px !important;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.6) !important;
+        }
+        
+        h2.welcome-title span {
+            display: inline-block;
+            margin-top: 4px;
+            font-size: 2.8rem !important;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF4500 100%) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            text-shadow: none !important;
+        }
+        
+        /* Exquisite Subtitle */
+        p.welcome-desc {
+            font-size: 15px !important;
+            line-height: 1.6 !important;
+            color: rgba(255, 255, 255, 0.9) !important;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+            margin-bottom: 30px !important;
+        }
+        
+        /* Premium Buttons */
+        .welcome-buttons {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 12px !important;
+            width: 100%;
+        }
+        
+        .welcome-buttons .btn-glow,
+        .welcome-buttons a:not(.btn-glow) {
+            width: 100%;
+            justify-content: center;
+            padding: 14px 24px !important;
+            font-size: 16px !important;
+            border-radius: 14px !important;
+            text-align: center;
+        }
+        
+        /* Halaman fitur mobile */
+        #fitur {
+            padding-top: 60px !important;
+            padding-bottom: 60px !important;
+        }
+        
+        #fitur h2 {
+            font-size: 28px !important;
+            margin-bottom: 40px !important;
+        }
+        
+        .glass-card {
+            padding: 24px 20px !important;
+            border-radius: 16px !important;
+        }
+        
+        /* Cara Kerja mobile */
+        #cara-kerja {
+            padding-top: 60px !important;
+            padding-bottom: 60px !important;
+        }
+        
+        #cara-kerja h2 {
+            font-size: 28px !important;
+        }
+        
+        #cara-kerja p {
+            font-size: 14px !important;
+        }
+        
+        /* CTA Section mobile */
+        section.py-40 {
+            padding-top: 60px !important;
+            padding-bottom: 80px !important;
+        }
+        
+        section.py-40 .glass-card {
+            padding: 36px 20px !important;
+        }
+        
+        section.py-40 h2 {
+            font-size: 28px !important;
+        }
+        
+        section.py-40 p {
+            font-size: 14px !important;
+            margin-bottom: 24px !important;
+        }
+    }
 </style>
 
 <div class="ambient-bg">
@@ -272,7 +396,7 @@
 
 <div class="hero-photo-bg"></div>
 
-<section class="min-h-[calc(100vh-80px)] flex items-center justify-center px-6 lg:px-16 relative z-10 perspective-container">
+<section class="min-h-[calc(100vh-80px)] welcome-hero flex items-center justify-center px-6 lg:px-16 relative z-10 perspective-container">
     <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
         
         <div class="lg:col-span-7 space-y-8 animate-float active">
@@ -284,18 +408,18 @@
                 <span class="text-xs font-bold tracking-widest text-slate-800 dark:text-white uppercase drop-shadow-md">Server FIKTI • Aktif & Terhubung</span>
             </div>
             
-            <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white drop-shadow-lg leading-[1.15] transition-colors duration-500">
+            <h2 class="welcome-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white drop-shadow-lg leading-[1.15] transition-colors duration-500">
                 Sistem Manajemen <br>
                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-500 drop-shadow-xl">
                     Fasilitas Kampus
                 </span>
             </h2>
             
-            <p class="text-white/95 drop-shadow-md leading-relaxed text-lg lg:text-xl max-w-2xl font-medium transition-colors duration-500">
+            <p class="welcome-desc text-white/95 drop-shadow-md leading-relaxed text-lg lg:text-xl max-w-2xl font-medium transition-colors duration-500">
                 Platform terpadu untuk mempermudah civitas akademika FIKTI Universitas Gunadarma. Pesan ruang lab, pantau jadwal kelas, dan kelola aset Kampus J1 secara <i>real-time</i> dengan mudah dan aman.
             </p>
 
-            <div class="pt-6 flex flex-wrap gap-5 transform-style-3d">
+            <div class="welcome-buttons pt-6 flex flex-wrap gap-5 transform-style-3d">
                 @auth
                     <a href="{{ url('/dashboard') }}" class="btn-glow px-8 py-4 text-lg font-bold flex items-center gap-3 text-decoration-none">
                         Akses Dashboard <i class="bi bi-arrow-right"></i>

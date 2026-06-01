@@ -1,3 +1,2 @@
-- [x] Perbaiki kegagalan horizontal scrolling pada tab pemilihan lantai di mobile dengan menerapkan width: 100%, max-width: 100%, dan min-width: 0 !important pada portal-card.
-- [x] Tambahkan visual indicator (scrollbar horizontal tipis, pill-shaped, premium) pada tab pemilihan lantai agar pengguna mengetahui bahwa halaman bisa digeser ke kanan/kiri di perangkat HP.
+- [x] Optimalkan tampilan halaman welcome di perangkat mobile dengan memperbesar ukuran judul (welcome-title) hingga 2.5rem, memperindah gradasi emas-orange di mode gelap, menyesuaikan ukuran teks deskripsi (welcome-desc) menjadi 15px, serta mengatur penataan vertikal yang elegan pada tombol-tombol utama (welcome-buttons).
 - [x] Push perubahan ke repositori git (bunga & origin) dan deploy ulang ke Vercel production.
