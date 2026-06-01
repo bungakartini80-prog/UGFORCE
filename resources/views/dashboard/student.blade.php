@@ -216,6 +216,7 @@
         display: flex;
         gap: 8px;
         overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
         padding-bottom: 12px;
         margin-bottom: 24px;
         scrollbar-width: none;
@@ -233,6 +234,7 @@
         color: var(--text-secondary);
         transition: all 0.2s ease;
         white-space: nowrap;
+        flex-shrink: 0;
     }
     .dark .floor-tab-btn {
         background: rgba(255, 255, 255, 0.04);

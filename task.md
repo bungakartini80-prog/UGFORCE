@@ -1,5 +1,2 @@
-- [x] Perbaiki tampilan dashboard mahasiswa agar tidak terpotong (responsive cover-crop margins & paddings) dan ubah kolom grid ruangan menjadi 1 kolom yang sangat rapi di mobile.
-- [x] Rapikan dan optimalkan tata letak greeting banner & background photo (portal-hero) di halaman mahasiswa agar modern dan terukur dengan indah di HP.
-- [x] Desain ulang dan rapikan halaman riwayat pesanan (bookings/index.blade.php) pada perangkat HP dengan mentransformasikan tabel HTML biasa menjadi kartu daftar pesanan bertumpuk yang sangat dinamis, mewah, dan modern (tidak meluap ke samping).
-- [x] Rapikan dan optimalkan halaman pembuatan pesanan peminjaman (bookings/create.blade.php) pada perangkat HP dengan menyesuaikan paddings banner hero, main grid, dan selection cards agar menyatu secara estetis.
-- [x] Jalankan push ke kedua remote repository (bunga dan origin) serta lakukan deploy ulang ke Vercel production.
+- [x] Perbaiki kegagalan horizontal scrolling pada tab pemilihan lantai (Lantai 4-6) di halaman dashboard mahasiswa & halaman pembuatan pesanan peminjaman (bookings/create.blade.php) dengan menerapkan flex-shrink: 0 pada tombol tab dan -webkit-overflow-scrolling: touch pada penampungnya.
+- [x] Push perubahan ke repositori git (bunga & origin) dan deploy ulang ke Vercel production.
