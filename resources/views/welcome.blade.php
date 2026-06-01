@@ -267,8 +267,8 @@
     @media (max-width: 768px) {
         /* Enlarge welcome hero section */
         .welcome-hero {
-            padding-top: 100px !important;
-            padding-bottom: 60px !important;
+            padding-top: 110px !important;
+            padding-bottom: 70px !important;
             min-height: 100vh !important;
             display: flex;
             align-items: center;
@@ -281,49 +281,51 @@
         
         /* Modernized glowing badge */
         .inline-flex.items-center.gap-3 {
-            padding: 8px 16px !important;
+            padding: 8px 18px !important;
             border-radius: 9999px !important;
-            font-size: 10px !important;
-            background: rgba(255, 255, 255, 0.08) !important;
-            border: 1px solid rgba(59, 130, 246, 0.25) !important;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.15) !important;
+            font-size: 11px !important;
+            background: rgba(15, 23, 42, 0.75) !important; /* Always dark glass on mobile for high readability */
+            border: 1px solid rgba(59, 130, 246, 0.3) !important;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(59, 130, 246, 0.2) !important;
             backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
         }
         
         /* Large, elegant, premium typography */
         h2.welcome-title {
-            font-size: 2.5rem !important;
+            font-size: 2.8rem !important; /* Larger for modern luxury look */
             line-height: 1.15 !important;
-            letter-spacing: -0.02em !important;
-            font-weight: 800 !important;
-            margin-bottom: 20px !important;
-            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.6) !important;
+            letter-spacing: -0.03em !important;
+            font-weight: 900 !important;
+            margin-bottom: 24px !important;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.75) !important;
         }
         
         h2.welcome-title span {
             display: inline-block;
-            margin-top: 4px;
-            font-size: 2.8rem !important;
+            margin-top: 6px;
+            font-size: 3.2rem !important; /* Larger for luxurious emphasis */
             background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF4500 100%) !important;
             -webkit-background-clip: text !important;
             -webkit-text-fill-color: transparent !important;
             text-shadow: none !important;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6)) !important;
         }
         
         /* Exquisite Subtitle */
         p.welcome-desc {
-            font-size: 15px !important;
-            line-height: 1.6 !important;
-            color: rgba(255, 255, 255, 0.9) !important;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
-            margin-bottom: 30px !important;
+            font-size: 16px !important; /* Enlarged for readability */
+            line-height: 1.65 !important;
+            color: rgba(255, 255, 255, 0.95) !important;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7) !important;
+            margin-bottom: 35px !important;
         }
         
         /* Premium Buttons */
         .welcome-buttons {
             flex-direction: column !important;
             align-items: stretch !important;
-            gap: 12px !important;
+            gap: 14px !important;
             width: 100%;
         }
         
@@ -331,8 +333,8 @@
         .welcome-buttons a:not(.btn-glow) {
             width: 100%;
             justify-content: center;
-            padding: 14px 24px !important;
-            font-size: 16px !important;
+            padding: 16px 28px !important;
+            font-size: 17px !important;
             border-radius: 14px !important;
             text-align: center;
         }
@@ -386,6 +388,29 @@
             margin-bottom: 24px !important;
         }
     }
+
+    /* ── CUSTOM MICRO-ANIMATIONS & STYLES FOR OVERHAUL ── */
+    .welcome-buttons a i {
+        display: inline-block;
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .welcome-buttons a:hover i.bi-arrow-right {
+        transform: translateX(6px);
+    }
+    .welcome-buttons a:hover i.bi-arrow-down {
+        transform: translateY(6px);
+    }
+    .welcome-buttons a:hover i.bi-shield-check {
+        transform: scale(1.2) rotate(15deg);
+    }
+
+    @keyframes scroll-bounce {
+        0%, 100% { transform: translate(-50%, 0); }
+        50% { transform: translate(-50%, -10px); }
+    }
+    .custom-scroll-bounce {
+        animation: scroll-bounce 2s infinite ease-in-out;
+    }
 </style>
 
 <div class="ambient-bg">
@@ -400,18 +425,24 @@
     <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
         
         <div class="lg:col-span-7 space-y-8 animate-float active">
-            <div class="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/60 dark:bg-white/10 border border-[#3b82f6]/30 backdrop-blur-md shadow-[0_0_20px_rgba(14,165,233,0.15)] transition-colors duration-500">
+            <div class="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-slate-950/60 dark:bg-white/10 border border-[#3b82f6]/40 backdrop-blur-md shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-all duration-500">
                 <span class="relative flex h-3 w-3">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#3b82f6] opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-3 w-3 bg-[#3b82f6]"></span>
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
                 </span>
-                <span class="text-xs font-bold tracking-widest text-slate-800 dark:text-white uppercase drop-shadow-md">Server FIKTI • Aktif & Terhubung</span>
+                <span class="text-xs font-bold tracking-widest text-slate-100 dark:text-white uppercase drop-shadow-md">Server FIKTI • Aktif & Terhubung</span>
+            </div>
+            
+            <div class="flex items-center gap-2 text-xs font-bold tracking-[0.3em] text-[#3b82f6] uppercase mb-1">
+                <span class="w-6 h-[1.5px] bg-[#3b82f6]"></span>
+                Kampus J1 FIKTI
             </div>
             
             <h2 class="welcome-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white drop-shadow-lg leading-[1.15] transition-colors duration-500">
                 Sistem Manajemen <br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-500 drop-shadow-xl">
+                <span class="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-amber-400 to-orange-500 py-1" style="filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));">
                     Fasilitas Kampus
+                    <span class="absolute bottom-0 left-0 w-full h-[3px] bg-gradient-to-r from-yellow-300 via-amber-400 to-orange-500 rounded-full opacity-80 shadow-[0_2px_10px_rgba(245,158,11,0.5)]"></span>
                 </span>
             </h2>
             
@@ -477,9 +508,9 @@
         
     </div>
     
-    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-white/80 text-3xl drop-shadow-md">
-        <i class="bi bi-chevron-compact-down"></i>
-    </div>
+    <a href="#fitur" class="absolute bottom-10 left-1/2 custom-scroll-bounce flex items-center justify-center w-12 h-12 rounded-full border border-white/20 bg-slate-950/40 backdrop-blur-md text-white hover:border-amber-400 hover:text-amber-400 transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_0_20px_rgba(245,158,11,0.3)] z-20 text-decoration-none">
+        <i class="bi bi-chevron-down text-lg"></i>
+    </a>
 </section>
 
 <section id="fitur" class="py-32 px-6 lg:px-16 relative z-10">
