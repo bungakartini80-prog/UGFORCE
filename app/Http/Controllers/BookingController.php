@@ -29,6 +29,17 @@ class BookingController extends Controller
             'start_time' => 'required',
             'end_time' => 'required|after:start_time',
             'purpose' => 'required|string|min:5',
+        ], [
+            'room_id.required' => 'Anda harus memilih salah satu ruangan kelas terlebih dahulu pada panel kiri.',
+            'room_id.exists' => 'Ruangan kelas yang dipilih tidak terdaftar.',
+            'booking_date.required' => 'Tanggal peminjaman wajib diisi.',
+            'booking_date.date' => 'Format tanggal peminjaman tidak valid.',
+            'booking_date.after_or_equal' => 'Tanggal peminjaman tidak boleh di masa lalu (minimal hari ini).',
+            'start_time.required' => 'Waktu mulai peminjaman wajib diisi.',
+            'end_time.required' => 'Waktu selesai peminjaman wajib diisi.',
+            'end_time.after' => 'Waktu selesai harus setelah waktu mulai.',
+            'purpose.required' => 'Tujuan peminjaman wajib diisi.',
+            'purpose.min' => 'Tujuan peminjaman harus berupa penjelasan minimal :min karakter.',
         ]);
 
         // Cek konflik dengan booking lain yang sudah approved/pending

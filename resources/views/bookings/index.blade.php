@@ -328,6 +328,24 @@
         </a>
     </div>
 
+    <!-- Alert Notifikasi -->
+    @if(session('success'))
+        <div class="card-glass p-4 mb-4" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3); color: var(--success); font-weight: 700; border-radius: var(--radius-sm);">
+            <i class="bi bi-check-circle-fill me-2"></i> {{ session('success') }}
+        </div>
+    @endif
+
+    @if($errors->any())
+        <div class="card-glass p-4 mb-4" style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); color: var(--danger); font-weight: 700; border-radius: var(--radius-sm);">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i> Kesalahan:
+            <ul class="mt-2 mb-0" style="padding-left: 20px;">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <!-- Table Panel Glass Card -->
     <div class="card-glass table-panel animate-float" style="animation-delay: 0.1s;">
         <div class="table-toolbar">

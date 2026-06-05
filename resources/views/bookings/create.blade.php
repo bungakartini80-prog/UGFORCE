@@ -459,6 +459,24 @@
         </div>
     </div>
 
+    <!-- Alert Notifikasi -->
+    @if(session('success'))
+        <div class="portal-card p-4 mb-4" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3); color: var(--success); font-weight: 700; border-radius: var(--radius-md);">
+            <i class="bi bi-check-circle-fill me-2"></i> {{ session('success') }}
+        </div>
+    @endif
+
+    @if($errors->any())
+        <div class="portal-card p-4 mb-4" style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); color: var(--danger); font-weight: 700; border-radius: var(--radius-md);">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i> Pengajuan Peminjaman Gagal:
+            <ul class="mt-2 mb-0" style="padding-left: 20px;">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form method="POST" action="{{ route('bookings.store') }}">
         @csrf
         <input type="hidden" name="room_id" id="room_id" value="{{ old('room_id', request('room_id')) }}" required>

@@ -452,6 +452,7 @@
     }
     .pill-pending { background: rgba(245, 158, 11, 0.1); color: var(--warning); border-color: rgba(245, 158, 11, 0.2); }
     .pill-approved { background: rgba(16, 185, 129, 0.1); color: var(--success); border-color: rgba(16, 185, 129, 0.2); }
+    .pill-completed { background: rgba(14, 165, 233, 0.1); color: var(--accent-blue); border-color: rgba(14, 165, 233, 0.2); }
     .pill-rejected { background: rgba(239, 68, 68, 0.1); color: var(--danger); border-color: rgba(239, 68, 68, 0.2); }
 
     .instructions-card {
@@ -818,6 +819,8 @@
                                     <span class="pill-status pill-pending">Pending</span>
                                 @elseif($booking->status === 'approved')
                                     <span class="pill-status pill-approved">Disetujui</span>
+                                @elseif($booking->status === 'completed')
+                                    <span class="pill-status pill-completed">Selesai</span>
                                 @else
                                     <span class="pill-status pill-rejected">Ditolak</span>
                                 @endif
