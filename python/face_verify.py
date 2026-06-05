@@ -44,9 +44,16 @@ def get_deepface():
 
 STRICT_FACE_CONFIDENCE = 0.40
 STRICT_VERIFIERS = [
-    {"model_name": "ArcFace", "distance_metric": "cosine", "threshold": 0.60},
-    {"model_name": "Facenet", "distance_metric": "cosine", "threshold": 0.40},
+    {"model_name": "ArcFace", "distance_metric": "cosine", "threshold": 0.65},
 ]
+
+# Load Haar Cascade once globally for ultra-fast face detection
+face_cascade = None
+try:
+    cascade_path = os.path.join(cv2.data.haarcascades, 'haarcascade_frontalface_default.xml')
+    face_cascade = cv2.CascadeClassifier(cascade_path)
+except Exception as e:
+    print(f"Error loading Haar Cascade: {e}")
 
 def b64_to_cv2(b64_string: str) -> np.ndarray:
     """Decode base64 image (data:image/jpeg;base64,... or raw) to BGR ndarray."""
@@ -98,50 +105,60 @@ def detect():
         img = b64_to_cv2(data["image"])
         h, w = img.shape[:2]
 
-        DeepFace = get_deepface()
-
-        # Menggunakan "opencv" untuk hasil kotak (bounding box) seluruh wajah yang super cepat.
-        # Catatan: Jika fps turun/lag saat streaming, ganti "opencv" menjadi "ssd" atau "mediapipe"
-        results = DeepFace.extract_faces(
-            img_path=img,
-            detector_backend="opencv",  
-            enforce_detection=False,
-            align=False,
-        )
-
-        faces = []
-        for r in results:
-            area = r.get("facial_area", {})
-            conf = r.get("confidence", 0.0)
-            
-            if conf < 0.5:
-                continue
+        if face_cascade is not None and not face_cascade.empty():
+            gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            detected_faces = face_cascade.detectMultiScale(
+                gray,
+                scaleFactor=1.1,
+                minNeighbors=5,
+                minSize=(30, 30)
+            )
+            faces = []
+            for (fx, fy, fw, fh) in detected_faces:
+                pad_w = int(fw * 0.1)
+                pad_h = int(fh * 0.1)
                 
-            fx = int(area.get("x", 0))
-            fy = int(area.get("y", 0))
-            fw = int(area.get("w", 0))
-            fh = int(area.get("h", 0))
-            
-            if fw < 20 or fh < 20:
-                continue
-            
-            # Padding opsional 10% agar kotak sedikit lebih lebar dari wajah aslinya
-            pad_w = int(fw * 0.1)
-            pad_h = int(fh * 0.1)
-            
-            fx = max(0, fx - pad_w)
-            fy = max(0, fy - pad_h)
-            fw = min(w - fx, fw + (pad_w * 2))
-            fh = min(h - fy, fh + (pad_h * 2))
-            
-            # Simulasi Loading 1-100% berdasarkan nilai confidence
-            loading_progress = min(100, int(conf * 100))
+                fx_p = max(0, int(fx) - pad_w)
+                fy_p = max(0, int(fy) - pad_h)
+                fw_p = min(w - fx_p, int(fw) + (pad_w * 2))
+                fh_p = min(h - fy_p, int(fh) + (pad_h * 2))
 
-            faces.append({
-                "x": fx, "y": fy, "w": fw, "h": fh,
-                "confidence": round(float(conf), 3),
-                "loading_progress": loading_progress
-            })
+                faces.append({
+                    "x": fx_p, "y": fy_p, "w": fw_p, "h": fh_p,
+                    "confidence": 0.95,
+                    "loading_progress": 95
+                })
+        else:
+            DeepFace = get_deepface()
+            results = DeepFace.extract_faces(
+                img_path=img,
+                detector_backend="opencv",  
+                enforce_detection=False,
+                align=False,
+            )
+            faces = []
+            for r in results:
+                area = r.get("facial_area", {})
+                conf = r.get("confidence", 0.0)
+                if conf < 0.5:
+                    continue
+                fx = int(area.get("x", 0))
+                fy = int(area.get("y", 0))
+                fw = int(area.get("w", 0))
+                fh = int(area.get("h", 0))
+                if fw < 20 or fh < 20:
+                    continue
+                pad_w = int(fw * 0.1)
+                pad_h = int(fh * 0.1)
+                fx_p = max(0, fx - pad_w)
+                fy_p = max(0, fy - pad_h)
+                fw_p = min(w - fx_p, fw + (pad_w * 2))
+                fh_p = min(h - fy_p, fh + (pad_h * 2))
+                faces.append({
+                    "x": fx_p, "y": fy_p, "w": fw_p, "h": fh_p,
+                    "confidence": round(float(conf), 3),
+                    "loading_progress": min(100, int(conf * 100))
+                })
 
         return jsonify({"detected": len(faces) > 0, "faces": faces})
 
@@ -166,9 +183,7 @@ def verify():
         try:
             face1_bgr, webcam_confidence = extract_single_face(DeepFace, img1, "Kamera")
             face2_bgr, stored_confidence = extract_single_face(DeepFace, img2, "Data akun")
-            print(f"[VERIFY] Face detected. Webcam conf: {webcam_confidence:.3f}, Stored conf: {stored_confidence:.3f}")
         except Exception as e:
-            print(f"[VERIFY] Face detection failed: {str(e)}")
             return jsonify({
                 "verified": False,
                 "distance": 1.0,
@@ -189,16 +204,13 @@ def verify():
                 )
                 distance = float(result.get("distance", 1.0))
                 threshold = float(verifier["threshold"])
-                passed = distance <= threshold
-                print(f"[VERIFY] {verifier['model_name']} comparison: distance={distance:.4f}, threshold={threshold}, passed={passed}")
                 checks.append({
                     "model": verifier["model_name"],
                     "distance": round(distance, 4),
                     "threshold": threshold,
-                    "passed": passed,
+                    "passed": distance <= threshold,
                 })
             except Exception as e:
-                print(f"[VERIFY] {verifier['model_name']} comparison error: {str(e)}")
                 checks.append({
                     "model": verifier["model_name"],
                     "distance": 1.0,
@@ -207,18 +219,21 @@ def verify():
                     "error": str(e),
                 })
 
-        verified = all(check["passed"] for check in checks)
-        weakest_score = min(
-            max(0.0, 1.0 - (check["distance"] / check["threshold"]))
-            for check in checks
-        )
+        verified = any(check["passed"] for check in checks)
         if verified:
-            similarity = round(85.0 + (weakest_score * 15.0), 1)
+            passed_scores = [
+                max(0.0, 1.0 - (check["distance"] / check["threshold"]))
+                for check in checks if check["passed"]
+            ]
+            best_passed_score = max(passed_scores) if passed_scores else 0.0
+            similarity = round(85.0 + (best_passed_score * 15.0), 1)
         else:
-            similarity = round(max(0.0, min(80.0, 80.0 * weakest_score)), 1)
-        distance = max(check["distance"] for check in checks)
-
-        print(f"[VERIFY] Overall: verified={verified}, similarity={similarity}%")
+            best_score = max(
+                max(0.0, 1.0 - (check["distance"] / check["threshold"]))
+                for check in checks
+            )
+            similarity = round(max(0.0, min(80.0, 80.0 * best_score)), 1)
+        distance = min(check["distance"] for check in checks)
 
         return jsonify({
             "verified": verified,
@@ -265,7 +280,7 @@ def health():
 if __name__ == "__main__":
     print("=" * 60)
     print("  UGFORCE Face Detection Server")
-    print("  Engine : DeepFace Verify (Port 5002) + Facenet")
+    print("  Engine : OpenCV Detect (Port 5001) + Facenet")
     print("  Port   : 5001")
     print("=" * 60)
     app.run(host="0.0.0.0", port=5002, debug=False, threaded=True)

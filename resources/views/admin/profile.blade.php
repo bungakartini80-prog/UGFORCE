@@ -281,7 +281,7 @@
    ================================================================ */
 const FACE_API     = '{{ config("services.face.api_url", "http://127.0.0.1:5001") }}';
 const FRAME_MS     = 1000 / 60;
-const API_INTERVAL = 120;   // ms between API calls (~8/sec)
+const API_INTERVAL = 800;   // ms between API calls (~1.25/sec)
 const DET_W = 320, DET_H = 240;
 
 let localStream     = null;

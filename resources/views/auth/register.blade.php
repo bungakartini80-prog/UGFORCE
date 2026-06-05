@@ -1017,7 +1017,7 @@
                 } finally {
                     isProcessing = false;
                 }
-            }, 500);
+            }, 800);
         }
     });
 </script>
