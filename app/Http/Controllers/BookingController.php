@@ -70,6 +70,10 @@ class BookingController extends Controller
             'status' => 'pending',
         ]);
 
+        if (!$booking || !$booking->exists) {
+            return back()->withErrors(['room_id' => 'Gagal menyimpan data peminjaman. Silakan coba lagi.'])->withInput();
+        }
+
         return redirect()->route('bookings.index')->with('success', 'Peminjaman diajukan, menunggu verifikasi admin.');
     }
 

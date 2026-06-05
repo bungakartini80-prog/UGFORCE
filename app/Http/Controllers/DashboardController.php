@@ -10,7 +10,7 @@ class DashboardController extends Controller
 {
     public function studentDashboard()
     {
-        $bookings = Auth::user()->bookings()->latest()->limit(5)->get();
+        $bookings = Auth::user()->bookings()->with('room')->latest()->limit(5)->get();
         $rooms = Room::where('status', 'available')->count(); // keep this for the counter card
         $allRooms = Room::orderBy('name')->get(); // fetch all rooms to display on the dashboard
         return view('dashboard.student', compact('bookings', 'rooms', 'allRooms'));
