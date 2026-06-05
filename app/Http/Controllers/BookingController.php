@@ -64,7 +64,7 @@ class BookingController extends Controller
 
     public function cancel(Booking $booking)
     {
-        if ($booking->user_id !== Auth::id() || $booking->status !== 'pending') {
+        if ((int)$booking->user_id !== (int)Auth::id() || $booking->status !== 'pending') {
             abort(403);
         }
         $booking->delete();
@@ -73,7 +73,7 @@ class BookingController extends Controller
 
     public function complete(Booking $booking)
     {
-        if ($booking->user_id !== Auth::id() || $booking->status !== 'approved') {
+        if ((int)$booking->user_id !== (int)Auth::id() || $booking->status !== 'approved') {
             abort(403);
         }
         $booking->update(['status' => 'completed']);
