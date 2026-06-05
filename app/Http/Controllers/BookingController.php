@@ -6,6 +6,8 @@ use App\Models\Room;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
@@ -42,7 +44,7 @@ class BookingController extends Controller
             'purpose.min' => 'Tujuan peminjaman harus berupa penjelasan minimal :min karakter.',
         ]);
 
-        // Cek konflik dengan booking lain yang sudah approved/pending
+        // Cek konflik dengan booking lain yang sudah approved/pending (BUKAN completed/rejected)
         $conflict = Booking::where('room_id', $validated['room_id'])
             ->where('booking_date', $validated['booking_date'])
             ->where(function ($q) use ($validated) {
@@ -57,24 +59,30 @@ class BookingController extends Controller
             ->exists();
 
         if ($conflict) {
-            return back()->withErrors(['room_id' => 'Ruangan sudah dipesan pada waktu tersebut.'])->withInput();
+            return back()->withErrors(['room_id' => 'Ruangan sudah dipesan pada waktu tersebut. Silakan pilih waktu lain.'])->withInput();
         }
 
-        $booking = Booking::create([
-            'user_id' => Auth::id(),
-            'room_id' => $validated['room_id'],
-            'booking_date' => $validated['booking_date'],
-            'start_time' => $validated['start_time'],
-            'end_time' => $validated['end_time'],
-            'purpose' => $validated['purpose'],
-            'status' => 'pending',
-        ]);
+        try {
+            $booking = Booking::create([
+                'user_id' => (int) Auth::id(),
+                'room_id' => (int) $validated['room_id'],
+                'booking_date' => $validated['booking_date'],
+                'start_time' => $validated['start_time'],
+                'end_time' => $validated['end_time'],
+                'purpose' => $validated['purpose'],
+                'status' => 'pending',
+            ]);
 
-        if (!$booking || !$booking->exists) {
-            return back()->withErrors(['room_id' => 'Gagal menyimpan data peminjaman. Silakan coba lagi.'])->withInput();
+            if (!$booking || !$booking->exists) {
+                Log::error('Booking create returned falsy', ['user_id' => Auth::id(), 'data' => $validated]);
+                return back()->withErrors(['room_id' => 'Gagal menyimpan data peminjaman. Silakan coba lagi.'])->withInput();
+            }
+
+            return redirect()->route('bookings.index')->with('success', 'Peminjaman berhasil diajukan! Menunggu verifikasi admin.');
+        } catch (\Exception $e) {
+            Log::error('Booking create exception: ' . $e->getMessage(), ['user_id' => Auth::id(), 'data' => $validated]);
+            return back()->withErrors(['room_id' => 'Terjadi kesalahan saat menyimpan: ' . $e->getMessage()])->withInput();
         }
-
-        return redirect()->route('bookings.index')->with('success', 'Peminjaman diajukan, menunggu verifikasi admin.');
     }
 
     public function cancel(Booking $booking)
@@ -91,7 +99,13 @@ class BookingController extends Controller
         if ((int)$booking->user_id !== (int)Auth::id() || $booking->status !== 'approved') {
             abort(403);
         }
-        $booking->update(['status' => 'completed']);
-        return redirect()->route('bookings.index')->with('success', 'Ruangan selesai digunakan.');
+
+        try {
+            $booking->update(['status' => 'completed']);
+            return redirect()->route('bookings.index')->with('success', 'Ruangan selesai digunakan. Anda bisa mengajukan peminjaman baru.');
+        } catch (\Exception $e) {
+            Log::error('Booking complete exception: ' . $e->getMessage(), ['booking_id' => $booking->id]);
+            return back()->withErrors(['error' => 'Gagal menyelesaikan peminjaman: ' . $e->getMessage()]);
+        }
     }
 }

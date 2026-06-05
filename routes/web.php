@@ -58,7 +58,7 @@ Route::middleware(['auth', 'role:lecturer'])->prefix('lecturer')->name('lecturer
 // Student & Lecturer routes
 Route::middleware(['auth', 'role:student,lecturer'])->group(function () {
     Route::resource('rooms', RoomController::class)->only(['index', 'show']);
-    Route::resource('bookings', BookingController::class)->except(['edit', 'update', 'destroy']);
+    Route::resource('bookings', BookingController::class)->only(['index', 'create', 'store']);
     Route::delete('/bookings/{booking}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
     Route::post('/bookings/{booking}/complete', [BookingController::class, 'complete'])->name('bookings.complete');
 });
