@@ -976,7 +976,7 @@
 
             function startDetectionLoop() {
                 detectionInterval = setInterval(async () => {
-                    if (isProcessing || window.isVerifying || window.verificationState === 'matched') return;
+                    if (isProcessing || window.verificationState === 'matched') return;
                     isProcessing = true;
 
                     // Capture current video frame to base64 (maintaining aspect ratio / cover crop to prevent squishing on mobile)
@@ -1187,7 +1187,7 @@
                     } finally {
                         isProcessing = false;
                     }
-                }, 800);
+                }, 150);
             }
 
             async function saveFaceSignature(signature) {
