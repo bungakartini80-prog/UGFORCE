@@ -181,9 +181,12 @@
     .pill-pending { background: rgba(245, 158, 11, 0.1); color: var(--warning); border-color: rgba(245, 158, 11, 0.3); }
     .pill-approved { background: rgba(16, 185, 129, 0.1); color: var(--success); border-color: rgba(16, 185, 129, 0.3); }
     .pill-rejected { background: rgba(239, 68, 68, 0.1); color: var(--danger); border-color: rgba(239, 68, 68, 0.3); }
+    .pill-completed { background: rgba(14, 165, 233, 0.1); color: var(--accent-blue); border-color: rgba(14, 165, 233, 0.3); }
 
     .btn-cancel { background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-sans);}
     .btn-cancel:hover { background: var(--danger); color: #fff; transform: scale(1.05); box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4); }
+    .btn-complete { background: rgba(16, 185, 129, 0.1); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.3); padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-sans);}
+    .btn-complete:hover { background: var(--success); color: #fff; transform: scale(1.05); box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4); }
 
     /* Empty State */
     .empty-state { text-align: center; padding: 80px 20px; color: var(--text-tertiary); }
@@ -364,6 +367,8 @@
                                 <span class="pill pill-pending"><i class="bi bi-arrow-repeat spin-slow"></i> Menunggu Verifikasi</span>
                             @elseif($booking->status === 'approved')
                                 <span class="pill pill-approved"><i class="bi bi-check-circle-fill"></i> Disetujui / Siap Pakai</span>
+                            @elseif($booking->status === 'completed')
+                                <span class="pill pill-completed"><i class="bi bi-check2-all"></i> Selesai Digunakan</span>
                             @else
                                 <span class="pill pill-rejected"><i class="bi bi-x-circle-fill"></i> Ditolak</span>
                             @endif
@@ -374,6 +379,13 @@
                                     @csrf @method('DELETE')
                                     <button type="submit" class="btn-cancel" title="Batalkan Reservasi">
                                         <i class="bi bi-trash3-fill"></i> Batalkan
+                                    </button>
+                                </form>
+                            @elseif($booking->status === 'approved')
+                                <form action="{{ route('bookings.complete', $booking) }}" method="POST" style="display:inline" onsubmit="return confirm('Yakin pemakaian ruangan ini sudah selesai?')">
+                                    @csrf
+                                    <button type="submit" class="btn-complete" title="Tandai Selesai Digunakan">
+                                        <i class="bi bi-check-circle-fill"></i> Selesai Pakai
                                     </button>
                                 </form>
                             @else

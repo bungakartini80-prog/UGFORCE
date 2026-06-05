@@ -140,6 +140,8 @@
                                         <span class="badge-cyber badge-warning"><i class="fas fa-spinner fa-spin"></i> Menunggu ACC</span>
                                     @elseif($booking->status == 'approved')
                                         <span class="badge-cyber badge-success"><i class="fas fa-check-double"></i> Disetujui</span>
+                                    @elseif($booking->status == 'completed')
+                                        <span class="badge-cyber badge-success" style="background: rgba(59, 130, 246, 0.1); color: var(--accent-blue); border-color: rgba(59, 130, 246, 0.3);"><i class="fas fa-check-circle"></i> Selesai</span>
                                     @else
                                         <span class="badge-cyber badge-danger"><i class="fas fa-ban"></i> Ditolak</span>
                                     @endif

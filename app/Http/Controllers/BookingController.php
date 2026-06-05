@@ -70,4 +70,13 @@ class BookingController extends Controller
         $booking->delete();
         return redirect()->route('bookings.index')->with('success', 'Peminjaman dibatalkan.');
     }
+
+    public function complete(Booking $booking)
+    {
+        if ($booking->user_id !== Auth::id() || $booking->status !== 'approved') {
+            abort(403);
+        }
+        $booking->update(['status' => 'completed']);
+        return redirect()->route('bookings.index')->with('success', 'Ruangan selesai digunakan.');
+    }
 }
