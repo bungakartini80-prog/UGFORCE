@@ -29,7 +29,7 @@ class BookingController extends Controller
             'room_id' => 'required|exists:rooms,id',
             'booking_date' => 'required|date|after_or_equal:today',
             'start_time' => 'required',
-            'end_time' => 'required|after:start_time',
+            'end_time' => 'required',
             'purpose' => 'required|string|min:5',
         ], [
             'room_id.required' => 'Anda harus memilih salah satu ruangan kelas terlebih dahulu pada panel kiri.',
@@ -39,24 +39,54 @@ class BookingController extends Controller
             'booking_date.after_or_equal' => 'Tanggal peminjaman tidak boleh di masa lalu (minimal hari ini).',
             'start_time.required' => 'Waktu mulai peminjaman wajib diisi.',
             'end_time.required' => 'Waktu selesai peminjaman wajib diisi.',
-            'end_time.after' => 'Waktu selesai harus setelah waktu mulai.',
             'purpose.required' => 'Tujuan peminjaman wajib diisi.',
             'purpose.min' => 'Tujuan peminjaman harus berupa penjelasan minimal :min karakter.',
         ]);
 
+        if ($validated['start_time'] === $validated['end_time']) {
+            return back()->withErrors(['end_time' => 'Waktu selesai tidak boleh sama dengan waktu mulai.'])->withInput();
+        }
+
+        try {
+            $start_dt = \Carbon\Carbon::parse($validated['booking_date'] . ' ' . $validated['start_time']);
+            $end_dt = \Carbon\Carbon::parse($validated['booking_date'] . ' ' . $validated['end_time']);
+        } catch (\Exception $e) {
+            return back()->withErrors(['start_time' => 'Format waktu tidak valid.'])->withInput();
+        }
+
+        if ($end_dt->lte($start_dt)) {
+            $end_dt->addDay();
+        }
+
         // Cek konflik dengan booking lain yang sudah approved/pending (BUKAN completed/rejected)
-        $conflict = Booking::where('room_id', $validated['room_id'])
-            ->where('booking_date', $validated['booking_date'])
-            ->where(function ($q) use ($validated) {
-                $q->whereBetween('start_time', [$validated['start_time'], $validated['end_time']])
-                  ->orWhereBetween('end_time', [$validated['start_time'], $validated['end_time']])
-                  ->orWhere(function ($q) use ($validated) {
-                      $q->where('start_time', '<=', $validated['start_time'])
-                        ->where('end_time', '>=', $validated['end_time']);
-                  });
-            })
+        // Batasi rentang query booking_date untuk performa optimal (H-1 sampai H+1 dari target booking)
+        $start_date_limit = $start_dt->clone()->subDay()->toDateString();
+        $end_date_limit = $end_dt->clone()->addDay()->toDateString();
+
+        $activeBookings = Booking::where('room_id', $validated['room_id'])
             ->whereIn('status', ['pending', 'approved'])
-            ->exists();
+            ->whereBetween('booking_date', [$start_date_limit, $end_date_limit])
+            ->get();
+
+        $conflict = false;
+        foreach ($activeBookings as $b) {
+            try {
+                $b_start = \Carbon\Carbon::parse($b->booking_date . ' ' . $b->start_time);
+                $b_end = \Carbon\Carbon::parse($b->booking_date . ' ' . $b->end_time);
+            } catch (\Exception $e) {
+                continue;
+            }
+
+            if ($b_end->lte($b_start)) {
+                $b_end->addDay();
+            }
+
+            // Check overlap: $start_dt < $b_end AND $b_start < $end_dt
+            if ($start_dt->lt($b_end) && $b_start->lt($end_dt)) {
+                $conflict = true;
+                break;
+            }
+        }
 
         if ($conflict) {
             return back()->withErrors(['room_id' => 'Ruangan sudah dipesan pada waktu tersebut. Silakan pilih waktu lain.'])->withInput();
