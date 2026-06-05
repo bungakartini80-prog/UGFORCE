@@ -109,3 +109,48 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/schedules/{schedule}/reset', [AdminController::class, 'resetSchedule'])->name('schedules.reset');
     Route::delete('/schedules/{schedule}', [AdminController::class, 'destroySchedule'])->name('schedules.destroy');
 });
+
+// --- RUTE MOCK FACE API (ULTRA-FAST & ANTI-LAG) ---
+Route::post('/api/face/detect', function (\Illuminate\Http\Request $request) {
+    return response()->json([
+        "detected" => true,
+        "faces" => [
+            [
+                "x" => 100,
+                "y" => 80,
+                "w" => 120,
+                "h" => 120,
+                "confidence" => 0.98,
+                "loading_progress" => 98
+            ]
+        ]
+    ]);
+});
+
+Route::post('/api/face/verify', function (\Illuminate\Http\Request $request) {
+    return response()->json([
+        "verified" => true,
+        "distance" => 0.28,
+        "similarity" => 93.6,
+        "checks" => [
+            [
+                "model" => "ArcFace",
+                "distance" => 0.28,
+                "threshold" => 0.65,
+                "passed" => true
+            ]
+        ],
+        "confidence" => [
+            "webcam" => 0.98,
+            "stored" => 0.98
+        ]
+    ]);
+});
+
+Route::get('/api/face/health', function () {
+    return response()->json([
+        "status" => "ok",
+        "engine" => "Mock Face API (Laravel Vercel)",
+        "time" => time()
+    ]);
+});
