@@ -578,10 +578,15 @@
 </style>
 
 <!-- ── BIOMETRIC OPENCV FACE SCAN GATE ── -->
-<div id="biometric-gate">
+<div id="biometric-gate" style="display: none;">
     <script>
-        if (sessionStorage.getItem('biometric_verified') === 'true') {
-            document.getElementById('biometric-gate').style.display = 'none';
+        if (sessionStorage.getItem('biometric_verified') !== 'true') {
+            document.getElementById('biometric-gate').style.display = 'flex';
+        } else {
+            var style = document.createElement('style');
+            style.id = 'biometric-gate-skip-style';
+            style.innerHTML = '#biometric-gate { display: none !important; }';
+            document.head.appendChild(style);
         }
     </script>
     <div class="gate-shell">
