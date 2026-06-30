@@ -57,7 +57,13 @@
 
     <style>
         .text-ug-gold {
+            color: #d97706 !important;
+            text-shadow: 0 1px 2px rgba(217, 119, 6, 0.05);
+        }
+
+        .dark .text-ug-gold {
             color: #fbbf24 !important;
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.35);
         }
 
         :root {
@@ -323,47 +329,14 @@
             footer { display: none !important; }
         }
 
-        /* Cinematic Preloader Styles */
-        @keyframes float3D {
-            0% { transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px) scale(1); }
-            50% { transform: perspective(1000px) rotateX(8deg) rotateY(-8deg) translateY(-5px) scale(1.04); }
-            100% { transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px) scale(1); }
+        /* Clean Movie Entrance Preloader Styles */
+        @keyframes cinematic-zoom {
+            0% { transform: scale(0.96); filter: brightness(0.95) blur(1px); }
+            100% { transform: scale(1.02); filter: brightness(1.05) blur(0); }
         }
-        .bg-radial-glow {
-            background: radial-gradient(circle, rgba(251, 191, 36, 0.18) 0%, rgba(37, 99, 235, 0.04) 50%, transparent 100%);
-        }
-        .shine-text-gold {
-            background: linear-gradient(90deg, #fbbf24 0%, #fffbeb 50%, #fbbf24 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: textShine 3s linear infinite;
-            filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.35));
-        }
-        @keyframes textShine {
-            to { background-position: 200% center; }
-        }
-        @keyframes grid-drift {
-            0% { transform: perspective(600px) rotateX(60deg) translateY(0); }
-            100% { transform: perspective(600px) rotateX(60deg) translateY(40px); }
-        }
-        .cinematic-grid {
-            position: absolute; inset: 0;
-            background-image: linear-gradient(rgba(251, 191, 36, 0.04) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(251, 191, 36, 0.04) 1px, transparent 1px);
-            background-size: 40px 40px;
-            transform-origin: center top;
-            transform: perspective(600px) rotateX(60deg);
-            animation: grid-drift 15s linear infinite;
-            opacity: 0.45;
-            z-index: 0;
-        }
-        .cinematic-stars {
-            position: absolute; inset: 0;
-            background-image: radial-gradient(white 1px, transparent 0);
-            background-size: 24px 24px;
-            opacity: 0.12;
-            z-index: 0;
+        @keyframes tracking-out {
+            0% { letter-spacing: 0.1em; opacity: 0; filter: blur(4px); }
+            100% { letter-spacing: 0.25em; opacity: 1; filter: blur(0); }
         }
 
         .pulse-badge {
@@ -390,28 +363,26 @@
 <body class="text-slate-900 dark:text-white transition-colors duration-500 min-h-screen flex flex-col">
 
     <!-- PRELOADER SCREEN (Full Viewport) -->
-    <div id="loader-wrapper" style="position: fixed; inset: 0; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #020617; transition: transform 1.5s cubic-bezier(0.85, 0, 0.15, 1), opacity 1.5s cubic-bezier(0.85, 0, 0.15, 1), filter 1.5s ease;">
-        <div class="cinematic-grid"></div>
-        <div class="cinematic-stars"></div>
+    <div id="loader-wrapper" style="position: fixed; inset: 0; z-index: 99999; overflow: hidden; pointer-events: none;">
+        <div id="loader-shutter-top" style="position: absolute; top: 0; left: 0; width: 100%; height: 50vh; background: #000000; transition: transform 1.5s cubic-bezier(0.85, 0, 0.15, 1); z-index: 1;"></div>
+        <div id="loader-shutter-bottom" style="position: absolute; bottom: 0; left: 0; width: 100%; height: 50vh; background: #000000; transition: transform 1.5s cubic-bezier(0.85, 0, 0.15, 1); z-index: 1;"></div>
         
-        <div class="flex flex-col items-center gap-5 relative z-10">
-            <div class="relative flex items-center justify-center mb-4" style="transform-style: preserve-3d; animation: float3D 5s ease-in-out infinite;">
-                <div class="absolute w-80 h-80 rounded-full bg-radial-glow -z-10 animate-pulse"></div>
-                <div class="relative w-32 h-32 flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-950 rounded-3xl p-3 border border-amber-400/30 shadow-[0_0_60px_rgba(245,158,11,0.25)] z-10">
-                    <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent rounded-3xl pointer-events-none"></div>
-                    <img src="{{ asset('logo.png') }}" alt="Logo Gunadarma" class="w-22 h-22 object-contain filter drop-shadow-[0_0_15px_rgba(245,158,11,0.45)]">
+        <div id="loader-content" class="flex flex-col items-center gap-4" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; transition: opacity 0.8s ease, transform 1s ease;">
+            <div class="relative flex items-center justify-center mb-2" style="animation: cinematic-zoom 6s ease-out infinite alternate;">
+                <div class="absolute w-64 h-64 rounded-full bg-amber-500/10 blur-3xl"></div>
+                <div class="w-24 h-24 flex items-center justify-center bg-transparent rounded-2xl p-2 z-10">
+                    <img src="{{ asset('logo.png') }}" alt="Logo Gunadarma" class="w-20 h-20 object-contain filter drop-shadow-[0_0_20px_rgba(245,158,11,0.3)]">
                 </div>
             </div>
             
             <div class="text-center">
-                <h2 class="text-4xl sm:text-5xl font-black tracking-[0.25em] mb-2 shine-text-gold">UG<span class="text-ug-gold">FORCE</span></h2>
-                <p class="text-[9px] font-bold tracking-[0.3em] text-[#fbbf24]/75 dark:text-[#fbbf24]/75 uppercase">Menginisialisasi Portal...</p>
+                <h2 class="text-3xl sm:text-4xl font-extrabold tracking-[0.25em] mb-1 text-white uppercase" style="animation: tracking-out 4s ease-out forwards;">
+                    UG<span class="text-ug-gold">FORCE</span>
+                </h2>
+                <p class="text-[8px] font-semibold tracking-[0.4em] text-white/50 uppercase mt-1 mb-3">Fakultas Ilmu Komputer & TI</p>
             </div>
-            <div class="w-72 h-1 bg-slate-800 rounded-full overflow-hidden relative border border-white/5">
-                <div id="loader-progress-bar" class="h-full bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 w-0 transition-all duration-75 shadow-[0_0_8px_#f59e0b]"></div>
-            </div>
-            <div class="font-mono text-lg font-black text-amber-400/90 tracking-widest">
-                <span id="loader-percent">0</span>%
+            <div class="w-48 h-[2px] bg-white/10 rounded-full overflow-hidden relative">
+                <div id="loader-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-yellow-400 w-0 transition-all duration-75"></div>
             </div>
         </div>
     </div>
@@ -708,7 +679,6 @@
                 }
             } else {
                 const bar = document.getElementById('loader-progress-bar');
-                const pct = document.getElementById('loader-percent');
                 let progress = 0;
                 
                 const timer = setInterval(() => {
@@ -718,42 +688,49 @@
                         clearInterval(timer);
                         
                         if (bar) bar.style.width = '100%';
-                        if (pct) pct.innerText = '100';
                         
                         sessionStorage.setItem('ugforce_loaded', 'true');
                         
                         setTimeout(() => {
-                            if (wrapper) {
-                                wrapper.style.transform = 'scale(2.5)';
-                                wrapper.style.filter = 'blur(15px)';
-                                wrapper.style.opacity = '0';
+                            // 1. Fade out content cleanly
+                            const loaderContent = document.getElementById('loader-content');
+                            if (loaderContent) {
+                                loaderContent.style.opacity = '0';
+                                loaderContent.style.transform = 'translate(-50%, -50%) scale(1.05)';
                             }
                             
-                            if (appWrapper) {
-                                appWrapper.style.transform = 'scale(1) translateY(0px) translateZ(0px)';
-                                appWrapper.style.opacity = '1';
-                                appWrapper.style.filter = 'blur(0px)';
+                            // 2. Open movie screen shutters
+                            setTimeout(() => {
+                                const shutterTop = document.getElementById('loader-shutter-top');
+                                const shutterBottom = document.getElementById('loader-shutter-bottom');
+                                if (shutterTop) shutterTop.style.transform = 'translateY(-100%)';
+                                if (shutterBottom) shutterBottom.style.transform = 'translateY(100%)';
+                                
+                                if (appWrapper) {
+                                    appWrapper.style.transform = 'scale(1) translateY(0px) translateZ(0px)';
+                                    appWrapper.style.opacity = '1';
+                                    appWrapper.style.filter = 'blur(0px)';
+                                    
+                                    setTimeout(() => {
+                                        appWrapper.style.transform = '';
+                                        appWrapper.style.filter = '';
+                                    }, 2000);
+                                }
+
+                                if (navbar) {
+                                    navbar.style.transform = 'translateY(0px)';
+                                    navbar.style.opacity = '1';
+                                }
+                                
+                                document.body.style.overflow = '';
                                 
                                 setTimeout(() => {
-                                    appWrapper.style.transform = '';
-                                    appWrapper.style.filter = '';
-                                }, 2000);
-                            }
-
-                            if (navbar) {
-                                navbar.style.transform = 'translateY(0px)';
-                                navbar.style.opacity = '1';
-                            }
-                            
-                            document.body.style.overflow = '';
-                            
-                            setTimeout(() => {
-                                if (wrapper) wrapper.style.display = 'none';
-                            }, 1200);
+                                    if (wrapper) wrapper.style.display = 'none';
+                                }, 1500);
+                            }, 600); // Wait for content fade out to finish
                         }, 300);
                     } else {
                         if (bar) bar.style.width = progress + '%';
-                        if (pct) pct.innerText = progress;
                     }
                 }, 40);
             }
