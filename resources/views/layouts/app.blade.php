@@ -56,14 +56,31 @@
     </script>
 
     <style>
+        @keyframes metallic-shine {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
         .text-ug-gold {
-            color: #d97706 !important;
-            text-shadow: 0 1px 2px rgba(217, 119, 6, 0.05);
+            color: #d97706;
+            background: linear-gradient(120deg, #d97706 0%, #fbbf24 25%, #fef08a 50%, #fbbf24 75%, #d97706 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: metallic-shine 4s linear infinite;
+            font-weight: 800;
+            display: inline-block;
         }
 
         .dark .text-ug-gold {
-            color: #fbbf24 !important;
-            text-shadow: 0 0 15px rgba(251, 191, 36, 0.35);
+            color: #fbbf24;
+            background: linear-gradient(120deg, #fbbf24 0%, #fef08a 25%, #fffbeb 50%, #fef08a 75%, #fbbf24 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: metallic-shine 3s linear infinite;
+            filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.35));
+            display: inline-block;
         }
 
         :root {
@@ -367,22 +384,25 @@
         <div id="loader-shutter-top" style="position: absolute; top: 0; left: 0; width: 100%; height: 50vh; background: #000000; transition: transform 1.5s cubic-bezier(0.85, 0, 0.15, 1); z-index: 1;"></div>
         <div id="loader-shutter-bottom" style="position: absolute; bottom: 0; left: 0; width: 100%; height: 50vh; background: #000000; transition: transform 1.5s cubic-bezier(0.85, 0, 0.15, 1); z-index: 1;"></div>
         
-        <div id="loader-content" class="flex flex-col items-center gap-4" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; transition: opacity 0.8s ease, transform 1s ease;">
+        <div id="loader-content" class="flex flex-col items-center justify-center gap-3 text-center" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; transition: opacity 0.8s ease, transform 1s ease; width: 90%; max-width: 360px;">
             <div class="relative flex items-center justify-center mb-2" style="animation: cinematic-zoom 6s ease-out infinite alternate;">
-                <div class="absolute w-64 h-64 rounded-full bg-amber-500/10 blur-3xl"></div>
-                <div class="w-24 h-24 flex items-center justify-center bg-transparent rounded-2xl p-2 z-10">
-                    <img src="{{ asset('logo.png') }}" alt="Logo Gunadarma" class="w-20 h-20 object-contain filter drop-shadow-[0_0_20px_rgba(245,158,11,0.3)]">
+                <div class="absolute w-48 h-48 rounded-full bg-amber-500/10 blur-3xl"></div>
+                <div class="w-20 h-20 flex items-center justify-center bg-transparent rounded-2xl p-2 z-10">
+                    <img src="{{ asset('logo.png') }}" alt="Logo Gunadarma" class="w-16 h-16 object-contain filter drop-shadow-[0_0_20px_rgba(245,158,11,0.3)]">
                 </div>
             </div>
             
-            <div class="text-center">
-                <h2 class="text-3xl sm:text-4xl font-extrabold tracking-[0.25em] mb-1 text-white uppercase" style="animation: tracking-out 4s ease-out forwards;">
+            <div style="width: 100%;">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-white uppercase mb-1" style="animation: tracking-out 4s ease-out forwards; white-space: nowrap; width: 100%;">
                     UG<span class="text-ug-gold">FORCE</span>
                 </h2>
-                <p class="text-[8px] font-semibold tracking-[0.4em] text-white/50 uppercase mt-1 mb-3">Fakultas Ilmu Komputer & TI</p>
+                <p class="text-[8px] font-bold tracking-[0.3em] text-white/40 uppercase mt-1.5 mb-4" style="white-space: nowrap;">Fakultas Ilmu Komputer & TI</p>
             </div>
-            <div class="w-48 h-[2px] bg-white/10 rounded-full overflow-hidden relative">
+            <div class="w-48 h-[2px] bg-white/10 rounded-full overflow-hidden relative mx-auto">
                 <div id="loader-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-yellow-400 w-0 transition-all duration-75"></div>
+            </div>
+            <div class="font-mono text-[10px] font-bold tracking-[0.2em] text-[#fbbf24]/80 mt-1">
+                <span id="loader-percent">0</span>%
             </div>
         </div>
     </div>
@@ -679,15 +699,17 @@
                 }
             } else {
                 const bar = document.getElementById('loader-progress-bar');
+                const pct = document.getElementById('loader-percent');
                 let progress = 0;
                 
                 const timer = setInterval(() => {
-                    progress += Math.floor(Math.random() * 12) + 4;
+                    progress += Math.floor(Math.random() * 8) + 3;
                     if (progress >= 100) {
                         progress = 100;
                         clearInterval(timer);
                         
                         if (bar) bar.style.width = '100%';
+                        if (pct) pct.innerText = '100';
                         
                         sessionStorage.setItem('ugforce_loaded', 'true');
                         
@@ -731,6 +753,7 @@
                         }, 300);
                     } else {
                         if (bar) bar.style.width = progress + '%';
+                        if (pct) pct.innerText = progress;
                     }
                 }, 40);
             }
