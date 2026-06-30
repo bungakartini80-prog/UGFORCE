@@ -95,11 +95,18 @@ class AdminController extends Controller
         $totalBookings = Booking::count();
 
         // 1. Data Line Chart (Tren Bulanan Tahun Ini)
-        $monthlyBookings = Booking::selectRaw('MONTH(booking_date) as month, COUNT(*) as count')
-            ->whereYear('booking_date', date('Y'))
-            ->groupBy('month')
-            ->orderBy('month')
-            ->pluck('count', 'month')->toArray();
+        $driver = \Illuminate\Support\Facades\DB::connection()->getDriverName();
+        if ($driver === 'pgsql') {
+            $monthlyBookings = Booking::selectRaw('EXTRACT(MONTH FROM booking_date) as month, COUNT(*) as count')
+                ->whereYear('booking_date', date('Y'))
+                ->groupBy(\Illuminate\Support\Facades\DB::raw('EXTRACT(MONTH FROM booking_date)'))
+                ->pluck('count', 'month')->toArray();
+        } else {
+            $monthlyBookings = Booking::selectRaw('MONTH(booking_date) as month, COUNT(*) as count')
+                ->whereYear('booking_date', date('Y'))
+                ->groupBy('month')
+                ->pluck('count', 'month')->toArray();
+        }
         
         $months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des'];
         $lineLabels = [];

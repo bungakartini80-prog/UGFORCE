@@ -445,7 +445,6 @@
                 Sistem Manajemen <br>
                 <span class="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-amber-400 to-orange-500 py-1" style="filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));">
                     Fasilitas Kampus
-                    <span class="absolute bottom-0 left-0 w-full h-[3px] bg-gradient-to-r from-yellow-300 via-amber-400 to-orange-500 rounded-full opacity-80 shadow-[0_2px_10px_rgba(245,158,11,0.5)]"></span>
                 </span>
             </h2>
             

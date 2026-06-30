@@ -26,7 +26,7 @@
             theme: {
                 extend: {
                     colors: {
-                        ug: { gold: '#38bdf8', purple: '#2563eb', dark: '#000000', blue: '#0ea5e9' }
+                        ug: { gold: '#fbbf24', purple: '#2563eb', dark: '#000000', blue: '#0ea5e9' }
                     },
                     fontFamily: {
                         sans: ['Instrument Sans', 'sans-serif'],
@@ -319,21 +319,47 @@
             footer { display: none !important; }
         }
 
-        /* Preloader */
+        /* Cinematic Preloader Styles */
         @keyframes float3D {
             0% { transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px) scale(1); }
-            50% { transform: perspective(1000px) rotateX(5deg) rotateY(-5deg) translateY(-3px) scale(1.02); }
+            50% { transform: perspective(1000px) rotateX(8deg) rotateY(-8deg) translateY(-5px) scale(1.04); }
             100% { transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px) scale(1); }
         }
-        .shine-text {
-            background: linear-gradient(90deg, #38bdf8 0%, #ffffff 50%, #38bdf8 100%);
+        .bg-radial-glow {
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.18) 0%, rgba(37, 99, 235, 0.04) 50%, transparent 100%);
+        }
+        .shine-text-gold {
+            background: linear-gradient(90deg, #fbbf24 0%, #fffbeb 50%, #fbbf24 100%);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: textShine 3s linear infinite;
+            filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.35));
         }
         @keyframes textShine {
             to { background-position: 200% center; }
+        }
+        @keyframes grid-drift {
+            0% { transform: perspective(600px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(600px) rotateX(60deg) translateY(40px); }
+        }
+        .cinematic-grid {
+            position: absolute; inset: 0;
+            background-image: linear-gradient(rgba(251, 191, 36, 0.04) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(251, 191, 36, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            transform-origin: center top;
+            transform: perspective(600px) rotateX(60deg);
+            animation: grid-drift 15s linear infinite;
+            opacity: 0.45;
+            z-index: 0;
+        }
+        .cinematic-stars {
+            position: absolute; inset: 0;
+            background-image: radial-gradient(white 1px, transparent 0);
+            background-size: 24px 24px;
+            opacity: 0.12;
+            z-index: 0;
         }
 
         .pulse-badge {
@@ -360,23 +386,27 @@
 <body class="text-slate-900 dark:text-white transition-colors duration-500 min-h-screen flex flex-col">
 
     <!-- PRELOADER SCREEN (Full Viewport) -->
-    <div id="loader-wrapper" style="position: fixed; inset: 0; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #020617; transition: transform 1.2s cubic-bezier(0.85, 0, 0.15, 1), opacity 1.2s cubic-bezier(0.85, 0, 0.15, 1);">
-        <div class="flex flex-col items-center gap-4">
-            <div class="relative flex items-center justify-center mb-2" style="transform-style: preserve-3d; animation: float3D 6s ease-in-out infinite;">
-                <div class="absolute w-64 h-64 rounded-full bg-gradient-to-r from-sky-400/15 to-blue-500/10 blur-3xl -z-10 animate-pulse"></div>
-                <div class="relative w-28 h-28 flex items-center justify-center bg-white dark:bg-white/10 rounded-2xl p-2 border border-slate-200 dark:border-white/10 shadow-2xl z-10">
-                    <img src="{{ asset('logo.png') }}" alt="Logo Gunadarma" class="w-20 h-20 object-contain">
+    <div id="loader-wrapper" style="position: fixed; inset: 0; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #020617; transition: transform 1.5s cubic-bezier(0.85, 0, 0.15, 1), opacity 1.5s cubic-bezier(0.85, 0, 0.15, 1), filter 1.5s ease;">
+        <div class="cinematic-grid"></div>
+        <div class="cinematic-stars"></div>
+        
+        <div class="flex flex-col items-center gap-5 relative z-10">
+            <div class="relative flex items-center justify-center mb-4" style="transform-style: preserve-3d; animation: float3D 5s ease-in-out infinite;">
+                <div class="absolute w-80 h-80 rounded-full bg-radial-glow -z-10 animate-pulse"></div>
+                <div class="relative w-32 h-32 flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-950 rounded-3xl p-3 border border-amber-400/30 shadow-[0_0_60px_rgba(245,158,11,0.25)] z-10">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent rounded-3xl pointer-events-none"></div>
+                    <img src="{{ asset('logo.png') }}" alt="Logo Gunadarma" class="w-22 h-22 object-contain filter drop-shadow-[0_0_15px_rgba(245,158,11,0.45)]">
                 </div>
             </div>
             
             <div class="text-center">
-                <h2 class="text-4xl font-black tracking-widest mb-1 shine-text">UG<span class="text-ug-gold">FORCE</span></h2>
-                <p class="text-[10px] font-bold tracking-[0.2em] text-slate-500 dark:text-white/60 uppercase">Menginisialisasi Portal...</p>
+                <h2 class="text-4xl sm:text-5xl font-black tracking-[0.25em] mb-2 shine-text-gold">UG<span class="text-ug-gold">FORCE</span></h2>
+                <p class="text-[9px] font-bold tracking-[0.3em] text-[#fbbf24]/75 dark:text-[#fbbf24]/75 uppercase">Menginisialisasi Portal...</p>
             </div>
-            <div class="w-64 h-1.5 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden relative">
-                <div id="loader-progress-bar" class="h-full bg-gradient-to-r from-sky-400 to-blue-600 dark:from-sky-400 dark:to-yellow-400 w-0 transition-all duration-75"></div>
+            <div class="w-72 h-1 bg-slate-800 rounded-full overflow-hidden relative border border-white/5">
+                <div id="loader-progress-bar" class="h-full bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 w-0 transition-all duration-75 shadow-[0_0_8px_#f59e0b]"></div>
             </div>
-            <div class="font-mono text-xl font-extrabold text-slate-200">
+            <div class="font-mono text-lg font-black text-amber-400/90 tracking-widest">
                 <span id="loader-percent">0</span>%
             </div>
         </div>
@@ -519,7 +549,7 @@
     </header>
 
     <!-- ── 3. APP PERSPECTIVE WRAPPER (Full Viewport Content Container) ── -->
-    <div id="app-perspective-wrapper" style="transform: translateY(180px); opacity: 0; filter: blur(6px); transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s ease, filter 1.2s ease; display: flex; flex-direction: column;" class="flex-grow">
+    <div id="app-perspective-wrapper" style="transform: scale(0.88) translateY(30px) translateZ(-150px); opacity: 0; filter: blur(15px); transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.6s cubic-bezier(0.16, 1, 0.3, 1), filter 1.6s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column;" class="flex-grow">
         
         <!-- Ambient background visuals -->
         <div class="ambient-bg"></div>
@@ -690,19 +720,20 @@
                         
                         setTimeout(() => {
                             if (wrapper) {
-                                wrapper.style.transform = 'translateY(-50px)';
+                                wrapper.style.transform = 'scale(2.5)';
+                                wrapper.style.filter = 'blur(15px)';
                                 wrapper.style.opacity = '0';
                             }
                             
                             if (appWrapper) {
-                                appWrapper.style.transform = 'translateY(0px)';
+                                appWrapper.style.transform = 'scale(1) translateY(0px) translateZ(0px)';
                                 appWrapper.style.opacity = '1';
                                 appWrapper.style.filter = 'blur(0px)';
                                 
                                 setTimeout(() => {
                                     appWrapper.style.transform = '';
                                     appWrapper.style.filter = '';
-                                }, 1500);
+                                }, 2000);
                             }
 
                             if (navbar) {
