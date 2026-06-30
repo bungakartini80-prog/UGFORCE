@@ -399,8 +399,8 @@
             </div>
             
             <div style="width: 100%;">
-                <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mb-1" style="animation: tracking-out 4s ease-out forwards; white-space: nowrap; width: 100%;">
-                    UG<span class="text-ug-gold">FORCE</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mb-1" style="animation: tracking-out 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; white-space: nowrap; width: 100%; text-shadow: 0 0 20px rgba(251, 191, 36, 0.45);">
+                    UG<span style="color: #fbbf24 !important;">FORCE</span>
                 </h2>
                 <p class="text-[9px] font-bold tracking-[0.35em] text-white/50 uppercase mt-2 mb-4" style="white-space: nowrap;">Fakultas Ilmu Komputer & TI</p>
             </div>
@@ -408,8 +408,8 @@
             <div class="w-56 h-[3px] bg-white/10 rounded-full overflow-hidden relative mx-auto border border-white/5">
                 <div id="loader-progress-bar" class="h-full bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 w-0 transition-all duration-75"></div>
             </div>
-            <div class="font-mono text-[11px] font-black tracking-[0.25em] text-[#fbbf24] mt-1">
-                <span id="loader-percent">0</span>%
+            <div class="font-mono text-xs sm:text-sm font-black tracking-[0.3em] text-[#fbbf24] mt-2">
+                LOADING <span id="loader-percent">0</span>%
             </div>
         </div>
     </div>
