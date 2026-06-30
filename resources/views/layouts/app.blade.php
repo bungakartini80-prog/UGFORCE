@@ -56,6 +56,10 @@
     </script>
 
     <style>
+        .text-ug-gold {
+            color: #fbbf24 !important;
+        }
+
         :root {
             --bg-color: #f8fafc;
             --border-soft: rgba(0, 0, 0, 0.05);
