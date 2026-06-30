@@ -63,13 +63,14 @@
 
         .text-ug-gold {
             color: #d97706;
-            background: linear-gradient(120deg, #d97706 0%, #fbbf24 25%, #fef08a 50%, #fbbf24 75%, #d97706 100%);
+            background: linear-gradient(120deg, #92400e 0%, #d97706 25%, #f59e0b 50%, #d97706 75%, #92400e 100%);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: metallic-shine 4s linear infinite;
-            font-weight: 800;
+            font-weight: 900;
             display: inline-block;
+            filter: drop-shadow(0px 1px 1px rgba(146, 64, 14, 0.25));
         }
 
         .dark .text-ug-gold {
@@ -384,24 +385,30 @@
         <div id="loader-shutter-top" style="position: absolute; top: 0; left: 0; width: 100%; height: 50vh; background: #000000; transition: transform 1.5s cubic-bezier(0.85, 0, 0.15, 1); z-index: 1;"></div>
         <div id="loader-shutter-bottom" style="position: absolute; bottom: 0; left: 0; width: 100%; height: 50vh; background: #000000; transition: transform 1.5s cubic-bezier(0.85, 0, 0.15, 1); z-index: 1;"></div>
         
-        <div id="loader-content" class="flex flex-col items-center justify-center gap-3 text-center" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; transition: opacity 0.8s ease, transform 1s ease; width: 90%; max-width: 360px;">
-            <div class="relative flex items-center justify-center mb-2" style="animation: cinematic-zoom 6s ease-out infinite alternate;">
-                <div class="absolute w-48 h-48 rounded-full bg-amber-500/10 blur-3xl"></div>
-                <div class="w-20 h-20 flex items-center justify-center bg-transparent rounded-2xl p-2 z-10">
-                    <img src="{{ asset('logo.png') }}" alt="Logo Gunadarma" class="w-16 h-16 object-contain filter drop-shadow-[0_0_20px_rgba(245,158,11,0.3)]">
+        <div id="loader-content" class="flex flex-col items-center justify-center gap-4 text-center" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; transition: opacity 0.8s ease, transform 1s ease; width: 90%; max-width: 450px;">
+            <!-- Large Logo (Foto) -->
+            <div class="relative flex items-center justify-center mb-3" style="animation: cinematic-zoom 6s ease-out infinite alternate;">
+                <!-- Glowing Gold Backlight -->
+                <div class="absolute w-72 h-72 rounded-full bg-amber-500/10 blur-[80px]"></div>
+                <!-- Premium Circular Shimmer Ring -->
+                <div class="absolute w-36 h-36 rounded-full border border-amber-500/20 shadow-[0_0_40px_rgba(245,158,11,0.15)]"></div>
+                <!-- Main Logo Container -->
+                <div class="w-32 h-32 flex items-center justify-center bg-slate-950/40 rounded-3xl p-3 z-10 border border-white/10 backdrop-blur-sm">
+                    <img src="{{ asset('logo.png') }}" alt="Logo Gunadarma" class="w-28 h-28 object-contain filter drop-shadow-[0_0_25px_rgba(245,158,11,0.4)]">
                 </div>
             </div>
             
             <div style="width: 100%;">
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-white uppercase mb-1" style="animation: tracking-out 4s ease-out forwards; white-space: nowrap; width: 100%;">
+                <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mb-1" style="animation: tracking-out 4s ease-out forwards; white-space: nowrap; width: 100%;">
                     UG<span class="text-ug-gold">FORCE</span>
                 </h2>
-                <p class="text-[8px] font-bold tracking-[0.3em] text-white/40 uppercase mt-1.5 mb-4" style="white-space: nowrap;">Fakultas Ilmu Komputer & TI</p>
+                <p class="text-[9px] font-bold tracking-[0.35em] text-white/50 uppercase mt-2 mb-4" style="white-space: nowrap;">Fakultas Ilmu Komputer & TI</p>
             </div>
-            <div class="w-48 h-[2px] bg-white/10 rounded-full overflow-hidden relative mx-auto">
-                <div id="loader-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-yellow-400 w-0 transition-all duration-75"></div>
+            
+            <div class="w-56 h-[3px] bg-white/10 rounded-full overflow-hidden relative mx-auto border border-white/5">
+                <div id="loader-progress-bar" class="h-full bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 w-0 transition-all duration-75"></div>
             </div>
-            <div class="font-mono text-[10px] font-bold tracking-[0.2em] text-[#fbbf24]/80 mt-1">
+            <div class="font-mono text-[11px] font-black tracking-[0.25em] text-[#fbbf24] mt-1">
                 <span id="loader-percent">0</span>%
             </div>
         </div>
